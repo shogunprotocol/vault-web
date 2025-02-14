@@ -1,7 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useWriteContract, usePublicClient } from "wagmi";
+import {
+  useAccount,
+  useWriteContract,
+  usePublicClient,
+  useReadContract,
+} from "wagmi";
 import { parseEther, erc20Abi, parseUnits } from "viem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,6 +31,19 @@ export function Vault() {
   const [isWithdrawLoading, setIsWithdrawLoading] = useState(false);
   const publicClient = usePublicClient();
 
+  const { refetch: refetchUserBalance } = useReadContract({
+    address: CONTRACT_ADDRESS as `0x${string}`,
+    abi: VAULT_ABI,
+    functionName: "balanceOf",
+    args: [userAddress as `0x${string}`],
+  });
+
+  const { refetch: refetchTotalAssets } = useReadContract({
+    address: CONTRACT_ADDRESS as `0x${string}`,
+    abi: VAULT_ABI,
+    functionName: "totalAssets",
+  });
+
   const handleDeposit = async () => {
     try {
       setIsDepositLoading(true);
@@ -47,9 +65,13 @@ export function Vault() {
         args: [parsedAmount],
       });
       await publicClient?.waitForTransactionReceipt({ hash: txHash });
+
+      await Promise.all([refetchUserBalance(), refetchTotalAssets()]);
+
       toast({
         title: "Deposit successful",
         description: `Successfully deposited ${depositAmount} tokens`,
+        variant: "success",
       });
       setDepositAmount("");
       setIsDepositLoading(false);
@@ -74,9 +96,13 @@ export function Vault() {
         args: [parsedAmount],
       });
       await publicClient?.waitForTransactionReceipt({ hash: txHash });
+
+      await Promise.all([refetchUserBalance(), refetchTotalAssets()]);
+
       toast({
         title: "Withdrawal successful",
         description: `Successfully withdrew ${withdrawAmount} shares`,
+        variant: "success",
       });
       setWithdrawAmount("");
       setIsWithdrawLoading(false);
