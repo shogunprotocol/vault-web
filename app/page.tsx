@@ -1,6 +1,7 @@
 import { Vault } from "@/components/Vault";
 import { VaultBalance } from "@/components/VaultBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { Strategies } from "@/components/Strategies";
 
 export default function Home() {
   return (
@@ -46,8 +47,9 @@ export default function Home() {
           </div>
         </div>
         {/* Vault Components */}
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <VaultBalance />
+          <Strategies />
           <Vault />
         </div>
       </div>
