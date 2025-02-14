@@ -2,7 +2,7 @@
 import React from "react";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { WagmiProvider } from "wagmi";

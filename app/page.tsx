@@ -1,7 +1,6 @@
 import { Vault } from "@/components/Vault";
 import { VaultBalance } from "@/components/VaultBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import Image from "next/image";
 
 export default function Home() {
   return (

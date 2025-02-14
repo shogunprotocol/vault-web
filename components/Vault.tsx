@@ -7,7 +7,7 @@ import {
   usePublicClient,
   useReadContract,
 } from "wagmi";
-import { parseEther, erc20Abi, parseUnits } from "viem";
+import { erc20Abi, parseUnits } from "viem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -76,6 +76,7 @@ export function Vault() {
       setDepositAmount("");
       setIsDepositLoading(false);
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Please enter a valid amount",
@@ -107,6 +108,7 @@ export function Vault() {
       setWithdrawAmount("");
       setIsWithdrawLoading(false);
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Please enter a valid amount",
