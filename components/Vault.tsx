@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useAccount, useWriteContract, usePublicClient } from "wagmi";
-import { parseEther, erc20Abi } from "viem";
+import { parseEther, erc20Abi, parseUnits } from "viem";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,12 +29,12 @@ export function Vault() {
   const handleDeposit = async () => {
     try {
       setIsDepositLoading(true);
-      const parsedAmount = parseEther(depositAmount);
+      const parsedAmount = parseUnits(depositAmount, 6);
       const approveTxHash = await writeContractAsync({
         address: USDC_ADDRESS as `0x${string}`,
         abi: erc20Abi,
         functionName: "approve",
-        args: [CONTRACT_ADDRESS as `0x${string}`, parseEther(withdrawAmount)],
+        args: [CONTRACT_ADDRESS as `0x${string}`, parsedAmount],
       });
       await publicClient?.waitForTransactionReceipt({
         hash: approveTxHash,
@@ -66,7 +66,7 @@ export function Vault() {
   const handleWithdraw = async () => {
     try {
       setIsWithdrawLoading(true);
-      const parsedAmount = parseEther(withdrawAmount);
+      const parsedAmount = parseUnits(withdrawAmount, 6);
       const txHash = await writeContractAsync({
         address: CONTRACT_ADDRESS as `0x${string}`,
         abi: VAULT_ABI,
