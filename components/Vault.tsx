@@ -104,7 +104,7 @@ export function Vault() {
   }
 
   return (
-    <Card>
+    <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 mb-10">
       <CardHeader>
         <CardTitle>Vault</CardTitle>
         <CardDescription>Deposit and withdraw from the vault</CardDescription>
