@@ -132,14 +132,20 @@ export function Vault() {
   }
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 mb-10">
+    <Card className="bg-gradient-to-br from-indigo-50/90 via-purple-50/90 to-pink-50/90 dark:from-indigo-950/90 dark:via-purple-950/90 dark:to-pink-950/90 backdrop-blur-sm border border-white/20 shadow-xl mb-10">
       <CardHeader>
-        <CardTitle>Vault</CardTitle>
-        <CardDescription>Deposit and withdraw from the vault</CardDescription>
+        <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
+          Vault
+        </CardTitle>
+        <CardDescription className="text-gray-600 dark:text-gray-300">
+          Deposit and withdraw from the vault
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         <div className="space-y-2">
-          <Label htmlFor="deposit">Deposit Amount</Label>
+          <Label htmlFor="deposit" className="text-gray-700 dark:text-gray-200">
+            Deposit Amount
+          </Label>
           <div className="flex space-x-2">
             <Input
               id="deposit"
@@ -147,18 +153,32 @@ export function Vault() {
               placeholder="0.0"
               value={depositAmount}
               onChange={(e) => setDepositAmount(e.target.value)}
+              className="bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-purple-100 dark:border-purple-900"
             />
             <Button
               onClick={handleDeposit}
               disabled={!depositAmount || isDepositLoading}
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium px-6 transition-all duration-200 hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
             >
-              {isDepositLoading ? "Depositing..." : "Deposit"}
+              {isDepositLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/60 border-t-white rounded-full animate-spin" />
+                  Depositing...
+                </div>
+              ) : (
+                "Deposit"
+              )}
             </Button>
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="withdraw">Withdraw Amount</Label>
+          <Label
+            htmlFor="withdraw"
+            className="text-gray-700 dark:text-gray-200"
+          >
+            Withdraw Amount
+          </Label>
           <div className="flex space-x-2">
             <Input
               id="withdraw"
@@ -166,12 +186,21 @@ export function Vault() {
               placeholder="0.0"
               value={withdrawAmount}
               onChange={(e) => setWithdrawAmount(e.target.value)}
+              className="bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-purple-100 dark:border-purple-900"
             />
             <Button
               onClick={handleWithdraw}
               disabled={!withdrawAmount || isWithdrawLoading}
+              className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-medium px-6 transition-all duration-200 hover:scale-105 disabled:hover:scale-100 disabled:opacity-50"
             >
-              {isWithdrawLoading ? "Withdrawing..." : "Withdraw"}
+              {isWithdrawLoading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/60 border-t-white rounded-full animate-spin" />
+                  Withdrawing...
+                </div>
+              ) : (
+                "Withdraw"
+              )}
             </Button>
           </div>
         </div>
