@@ -48,8 +48,8 @@ export default function Home() {
         </div>
         {/* Vault Components */}
         <div className="max-w-4xl mx-auto">
-          <VaultBalance />
           <Strategies />
+          <VaultBalance />
           <Vault />
         </div>
       </div>
