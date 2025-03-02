@@ -8,19 +8,19 @@ import {
 
 const strategies = [
   {
-    name: "Aave",
+    name: "Silo Finance",
     description: "Lending and borrowing optimization on Aave protocol",
     icon: "💰",
     details: "Automated lending position management for optimal yields",
   },
   {
-    name: "Balancer",
-    description: "Liquidity provision and yield farming on Balancer",
+    name: "Beets",
+    description: "Dex and yield farming on Beets",
     icon: "⚖️",
     details: "Strategic liquidity deployment across various pools",
   },
   {
-    name: "GoGoPool",
+    name: "Origin Sonic",
     description: "Liquid staking and validator rewards optimization",
     icon: "🌊",
     details: "Efficient management of staking positions",

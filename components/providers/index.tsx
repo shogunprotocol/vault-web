@@ -6,14 +6,14 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { WagmiProvider } from "wagmi";
-import { avalanche } from "wagmi/chains";
+import { sonic } from "wagmi/chains";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import "@rainbow-me/rainbowkit/styles.css";
 
 const config = getDefaultConfig({
-  appName: "My RainbowKit App",
+  appName: "AI Bu Finance Vaults",
   projectId: "YOUR_PROJECT_ID",
-  chains: [avalanche],
+  chains: [sonic],
   ssr: true,
 });
 
