@@ -8,18 +8,18 @@ import {
   useReadContract,
 } from "wagmi";
 import { erc20Abi, parseUnits } from "viem";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/hooks/use-toast";
-import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "@/constants";
+} from "../components/ui/card";
+import { Label } from "../components/ui/label";
+import { useToast } from "../hooks/use-toast";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "../constants";
 
 export function Vault() {
   const { address: userAddress } = useAccount();

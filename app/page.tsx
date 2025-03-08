@@ -1,7 +1,7 @@
-import { Vault } from "@/components/Vault";
-import { VaultBalance } from "@/components/VaultBalance";
+import { Vault } from "../components/Vault";
+import { VaultBalance } from "../components/VaultBalance";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { Strategies } from "@/components/Strategies";
+import { Strategies } from "../components/Strategies";
 
 export default function Home() {
   return (

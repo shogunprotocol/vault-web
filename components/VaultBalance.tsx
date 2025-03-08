@@ -2,14 +2,14 @@
 
 import { useAccount, useReadContract } from "wagmi";
 import { formatUnits } from "viem";
-import { CONTRACT_ADDRESS, VAULT_ABI } from "@/constants";
+import { CONTRACT_ADDRESS, VAULT_ABI } from "../constants";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../components/ui/card";
 
 export function VaultBalance() {
   const { address: userAddress } = useAccount();

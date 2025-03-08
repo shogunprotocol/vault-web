@@ -1,0 +1,27 @@
+@use 'sass:color';
+
+@function getThemes() {
+  @return (
+    'light': (
+      'primary': #ffffff,
+      'secondary': #000000,
+      'contrast': #2226d9,
+      'muted': #6b7280
+    ),
+    'dark': (
+      'primary': #000000,
+      'secondary': #ffffff,
+      'contrast': #c93581,
+      'muted': #9ca3af
+    )
+  );
+}
+
+@each $name, $theme in getThemes() {
+  .theme-#{$name} {
+    @each $name, $color in $theme {
+      --theme-#{$name}: #{$color};
+      --theme-#{$name}-transparent: #{color.change($color, $alpha: 0)};
+    }
+  }
+}
