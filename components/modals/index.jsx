@@ -45,7 +45,7 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
 
     // Add both success and error sound refs
     const successAudioRef = useRef(new Audio('/audio/samurai-sword.mp3'));
-    const errorAudioRef = useRef(new Audio('/audio/error.mp3')); // Add an error sound if you have one
+    const errorAudioRef = useRef(new Audio('/audio/error.mp3'));
 
     // Contract read hooks for balances
     const { data: userBalance, refetch: refetchUserBalance } = useReadContract({
@@ -311,7 +311,7 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                         </div>
                         <div>
                             <h2 className="font-basement text-basement-cyan text-xl">
-                                {type === 'deposit' ? 'Power Up Your Assets' : 'Strategic Withdrawal'}
+                                {type === 'deposit' ? 'Power Up Your Assets' : 'Strategic Withdraw'}
                             </h2>
                             <p className="text-sm text-gray-400">
                                 {type === 'deposit' 
@@ -391,16 +391,16 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                     </NextUIButton>
 
                     {showStrategies && (
-                        <div className="mt-4 space-y-4">
-                            {strategies.map((strategy) => (
-                                <div
-                                    key={strategy.name}
-                                    className="p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 transition-all duration-200 hover:scale-[1.02] group"
-                                >
-                                    <div className="flex items-center justify-between mb-3">
-                                        <div className="flex items-center gap-3">
-                                            <div className="p-2 rounded-lg bg-white/5 group-hover:bg-basement-cyan/10 transition-colors duration-200">
-                                                <span className="text-xl">{strategy.icon}</span>
+                        <div className="mt-4 space-y-3">
+                            <div className="grid grid-cols-1 gap-3">
+                                {strategies.map((strategy) => (
+                                    <div
+                                        key={strategy.name}
+                                        className="p-3 rounded-xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 transition-all duration-200 hover:border-basement-cyan/20"
+                                    >
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <div className="p-2 rounded-lg bg-white/5 text-xl shrink-0">
+                                                <span>{strategy.icon}</span>
                                             </div>
                                             <div>
                                                 <h3 className="font-basement text-basement-cyan flex items-center gap-2">
@@ -412,19 +412,19 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                                                 <p className="text-xs text-gray-500">{strategy.protocol}</p>
                                             </div>
                                         </div>
+                                        <p className="text-xs text-gray-400">{strategy.description}</p>
+                                        <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-white/10">
+                                            {strategy.details}
+                                        </p>
                                     </div>
-                                    <p className="text-sm text-gray-400">{strategy.description}</p>
-                                    <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-white/10">
-                                        {strategy.details}
-                                    </p>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                             
-                            <div className="p-4 rounded-lg bg-gradient-to-r from-basement-cyan/5 to-transparent border border-basement-cyan/20">
+                            <div className="p-3 rounded-lg bg-gradient-to-r from-basement-cyan/5 to-transparent border border-basement-cyan/20">
                                 <div className="flex items-start gap-3">
-                                    <div className="p-2 rounded-lg bg-basement-cyan/10 text-xl">🤖</div>
+                                    <div className="p-2 rounded-lg bg-basement-cyan/10 text-lg shrink-0">🤖</div>
                                     <div>
-                                        <p className="text-sm text-gray-400 mb-1">
+                                        <p className="text-xs text-gray-400 mb-1">
                                             <span className="text-basement-cyan font-bold">AI Security Guarantee:</span>{' '}
                                             Your assets never leave our secure smart contracts.
                                         </p>

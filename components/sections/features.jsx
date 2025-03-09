@@ -51,7 +51,7 @@ export function SecondaryFeatures() {
                         <SectionDescription>
                             <motion.div
                                 ref={rezyRef}>
-                                Join the Shogun and let our advanced algorithms
+                                Join the Shōgun and let our advanced algorithms
                                 automatically atomically allocate your crypto into the highest-yielding DeFi opportunities.
                             </motion.div>
                         </SectionDescription>

@@ -39,7 +39,7 @@ export const Header = forwardRef((_, ref) => {
                 className={s.logoImage} // This will have the hover effect
               />
               <Image
-                src="/images/logo/cult-of-roning-typography.png"
+                src="/images/logo/shogun_logo.png"
                 alt="Logo Alternative"
                 width={75}
                 height={75}

@@ -1,4 +1,4 @@
-![Shogun DeFAI Super Vaults](media/header.gif)
+![Shōgun DeFAI Super Vaults](media/header.gif)
 
 # Shōgun: DeFAI Super Vaults
 
