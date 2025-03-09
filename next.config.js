@@ -1,6 +1,13 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-});
+// Make bundle analyzer optional
+let withBundleAnalyzer;
+try {
+  withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  });
+} catch (e) {
+  withBundleAnalyzer = (config) => config;
+}
+
 const path = require('path');
 const sassUtils = require(__dirname + '/libs/sass-utils');
 const sassVars = require(__dirname + '/config/variables.js');
