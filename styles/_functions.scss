@@ -1,0 +1,96 @@
+@use 'sass:math';
+
+// Configuration map
+$config: (
+  breakpoints: (
+    mobile: 800px
+  ),
+  viewports: (
+    desktop: (
+      width: 1440px,
+      height: 900px
+    ),
+    mobile: (
+      width: 375px,
+      height: 667px
+    )
+  )
+);
+
+// Get function to access configuration values
+@function get($path) {
+  $current: $config;
+  @each $key in str-split($path, '.') {
+    $current: map-get($current, $key);
+  }
+  @return $current;
+}
+
+// Helper function to split string by delimiter
+@function str-split($string, $separator) {
+  $split-arr: ();
+  $index: str-index($string, $separator);
+  @while $index != null {
+    $item: str-slice($string, 1, $index - 1);
+    $split-arr: append($split-arr, $item);
+    $string: str-slice($string, $index + 1);
+    $index: str-index($string, $separator);
+  }
+  $split-arr: append($split-arr, $string);
+  @return $split-arr;
+}
+
+/* Breakpoints */
+$mobile-breakpoint: get('breakpoints.mobile');
+
+// Viewport Sizes
+$desktop-width: get('viewports.desktop.width');
+$desktop-height: get('viewports.desktop.height');
+
+$mobile-width: get('viewports.mobile.width');
+$mobile-height: get('viewports.mobile.height');
+
+// Breakpoint
+@mixin mobile {
+  @media (max-width: #{$mobile-breakpoint - 1px}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$mobile-breakpoint}) {
+    @content;
+  }
+}
+
+@function mobile-vw($pixels) {
+  $result: math.div($pixels, $mobile-width) * 100;
+  @return #{$result}vw;
+}
+
+@function mobile-vh($pixels) {
+  $result: math.div($pixels, $mobile-height) * 100;
+  @return #{$result}vh;
+}
+
+@function desktop-vw($pixels) {
+  $result: math.div($pixels, $desktop-width) * 100;
+  @return #{$result}vw;
+}
+
+@function desktop-vh($pixels) {
+  $result: math.div($pixels, $desktop-height) * 100;
+  @return #{$result}vh;
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

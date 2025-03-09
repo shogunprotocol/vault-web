@@ -1,0 +1,88 @@
+.home {
+  font-family: sans-serif;
+  font-weight: 700;
+  // Updated to 100vh to fill the viewport height
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-height: calc(100vh - 60px);
+    text-align: left;
+    font-size: desktop-vw(16px);
+    max-width: desktop-vw(1400px);
+    margin: 100px -10px 0 auto;
+    text-transform: uppercase;
+  }
+
+  .word {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .titleText {
+    display: block;
+  }
+  .titleText2 {
+    display: block;
+    color: rgb(202, 202, 202);
+  }
+
+  .studioRezy {
+    font-size: desktop-vw(64px);
+    display: block;
+    margin-bottom: desktop-vw(20px);
+  }
+}
+
+.backgroundVideo {
+  position: relative;
+  top: 100px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  @media (min-width: 768px) {
+    position: absolute;
+    padding: 20px;
+    top: -100px;
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: 10px;
+  @media (min-width: 768px) {
+    position: relative;
+    padding: 0px;
+  }
+}
+.cardGridContainer {
+  position: relative;
+  bottom: 500px;
+  left: 0;
+  z-index: -1;
+  padding: 10px;
+  @media (min-width: 768px) {
+    position: absolute;
+    padding: 0px;
+    bottom: 0px;
+    right: 0px;
+  }
+}
+.video-wrapper {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}

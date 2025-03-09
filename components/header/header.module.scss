@@ -1,0 +1,55 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  color: var(--theme-secondary);
+  padding: mobile-vw(20px) 0;
+
+  @include desktop {
+    padding: desktop-vw(40px) 0;
+  }
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+
+    .logoContainer {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+
+      .logoImageContainer {
+        position: relative;
+        width: 75px; // Match the width of your images
+        height: 75px; // Match the height of your images
+
+        .logoImage,
+        .logoImageAlt {
+          position: absolute;
+          inset: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .logoImageAlt {
+          opacity: 0;
+        }
+
+        &:hover {
+          .logoImage {
+            opacity: 0;
+          }
+
+          .logoImageAlt {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

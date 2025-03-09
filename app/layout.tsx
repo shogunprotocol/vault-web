@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Providers from "@/components/providers";
-import { Toaster } from "@/components/ui/toaster";
+import "../styles/global.scss";
+import { RootProvider } from './providers'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,22 +14,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vaults - Bu Finance",
+  title: "Vaults - Shōgun",
   description: "AI-Powered Smart Vaults",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Toaster />
-        <Providers>{children}</Providers>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <RootProvider>
+          {children}
+        </RootProvider>
       </body>
     </html>
   );

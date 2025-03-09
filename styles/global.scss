@@ -1,0 +1,292 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './_reset.scss';
+@import './_fonts.scss';
+@import './_colors.scss';
+@import './_easings.scss';
+@import './_functions.scss';
+@import './_layout.scss';
+@import './_utils.scss';
+@import './_font-style.scss';
+@import './_themes.scss';
+@import './_scroll.scss';
+
+:root {
+  --header-height: #{mobile-vw(58px)};
+
+  @include desktop {
+    --header-height: #{desktop-vw(98px)};
+    --clr-1: #00c2ff;
+    --clr-2: #33ff8c;
+    --clr-3: #ffc640;
+    --clr-4: #e54cff;
+    --clr-5: #455ce9;
+
+    --blur: 1rem;
+    --fs: clamp(3rem, 8vw, 7rem);
+    --ls: clamp(-1.75px, -0.25vw, -3.5px);
+  }
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a,
+button,
+input,
+label,
+textarea,
+select {
+  color: inherit;
+  cursor: pointer;
+}
+
+*::selection {
+  background-color: var(--theme-secondary);
+  color: var(--theme-primary);
+}
+
+svg.icon {
+  path[fill],
+  rect[fill],
+  circle[fill] {
+    fill: currentColor;
+  }
+
+  path[stroke],
+  rect[stroke],
+  circle[stroke] {
+    stroke: currentColor;
+  }
+}
+
+.link {
+  &:hover {
+    color: var(--theme-contrast);
+  }
+}
+.cardGridContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  padding: 20px;
+}
+
+.glassmorphism {
+  border-radius: 10px;
+  color: #fff;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 10px 10px 20px -10px rgba(255, 255, 255, 0.2);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: 0.5s ease;
+}
+
+.custom-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.custom-button:hover span:nth-child(1) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, #a78bfa, #d946ef);
+  animation: animate1 2s linear infinite;
+}
+
+@keyframes animate1 {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.custom-button:hover span:nth-child(2) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to bottom, #a78bfa, #d946ef);
+  animation: animate2 2s linear infinite;
+  animation-delay: 1s;
+}
+
+@keyframes animate2 {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.custom-button:hover span:nth-child(3) {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to left, #a78bfa, #d946ef);
+  animation: animate3 2s linear infinite;
+}
+
+@keyframes animate3 {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.custom-button:hover span:nth-child(4) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background: linear-gradient(to top, #a78bfa, #d946ef);
+  animation: animate4 2s linear infinite;
+  animation-delay: 1s;
+}
+
+.custom_button_add {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  color: #fff;
+  background-color: #ec4899;
+  border-radius: 0.375rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  transition-duration: 300ms;
+}
+
+.custom_button_add:hover {
+  font-weight: bold;
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #ec407a, #ab47bc);
+}
+.custom_button_add_2 {
+  font-weight: bold;
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(
+    to right,
+    #1a2758,
+    #202963,
+    #2d3080,
+    #403cbd,
+    #5550e7
+  );
+}
+
+@keyframes animate4 {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+.custom-gradient {
+  background: linear-gradient(
+    to bottom right,
+    #2226d9 50%,
+    #5c45ce 60%,
+    #6b4ac8 65%,
+    #8d46b9 75%,
+    #c93581 100%
+  );
+}
+
+.custom-gradient-2 {
+  background: linear-gradient(
+    to bottom right,
+    #2226d9 40%,
+    #5c45ce 45%,
+    #6b4ac8 47%,
+    #8d46b9 48%,
+    #c93581 50%,
+    #c82c7c 55%
+  );
+}
+
+.custom-gradient-card {
+  background: linear-gradient(
+    to bottom right,
+    rgba(34, 38, 217, 0.1) 50%,
+    rgba(92, 69, 206, 0.1) 60%,
+    rgba(107, 74, 200, 0.1) 65%,
+    rgba(141, 70, 185, 0.1) 70%,
+    rgba(201, 53, 129, 0.1) 85%
+  );
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(0, 1fr) 0fr repeat(0, 1fr); /* Adjust the third column to be 0.8 times the size of others */
+  grid-template-rows: 0fr 0fr 0fr; /* Adjust the third row size if needed */
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+/* Additional style to target the third column's cell specifically, if needed */
+.grid > :nth-child(4n) {
+  height: 100px;
+  @media (min-width: 768px) {
+    height: 20px;
+    width: auto;
+  }
+}
+
+.container {
+  position: relative;
+}
+
+.container,
+#interactive.viewport {
+  width: 400px;
+  height: 300px;
+}
+
+#interactive.viewport canvas,
+video {
+  width: 400px;
+  height: 300px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#interactive.viewport canvas.drawingBuffer,
+video.drawingBuffer {
+  width: 400px;
+  height: 300px;
+  position: absolute;
+}
