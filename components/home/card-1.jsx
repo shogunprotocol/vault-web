@@ -12,7 +12,7 @@ export default function Card1() {
         [4, 3],
     ]
 
-    const count = 7;
+    const count = 16;
 
 
     return (

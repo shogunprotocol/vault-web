@@ -7,16 +7,12 @@ import { Footer } from 'components/footer'
 import { Header } from 'components/header'
 import { Scrollbar } from 'components/scrollbar'
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import s from './layout.module.scss'
 import Link from 'next/link'
 
-export function Layout({
-  seo = { title: '', description: '', image: '', keywords: '' },
-  children,
-  theme = 'light',
-  className,
-}) {
+// Create a separate component for the scroll handling
+function ScrollHandler() {
   const lenis = useLenis()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -29,6 +25,15 @@ export function Layout({
     }
   }, [lenis, pathname, searchParams])
 
+  return null
+}
+
+export function Layout({
+  seo = { title: '', description: '', image: '', keywords: '' },
+  children,
+  theme = 'light',
+  className,
+}) {
   return (
     <>
       <CustomHead {...seo} />
@@ -37,6 +42,9 @@ export function Layout({
           <Cursor />
           <Scrollbar />
           <Header />
+          <Suspense fallback={null}>
+            <ScrollHandler />
+          </Suspense>
           <main className={s.main}>{children}</main>
           <Footer />
         </div>

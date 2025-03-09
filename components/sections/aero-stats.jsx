@@ -65,7 +65,7 @@ export function AeroStats() {
                         <div className="relative flex flex-col items-center justify-center w-full h-full p-4">
                             <div className="flex w-full mx-auto p-4">
                                 <canvas ref={canvasRef} className="relative top-1/2 left-0 w-full h-full z-1" />
-                                <div ref={apyRef} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-7xl font-basement text-white">7%</div>
+                                <div ref={apyRef} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-7xl font-basement text-white">16%</div>
                             </div>
                         </div>
                     </motion.div>

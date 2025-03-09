@@ -2,20 +2,13 @@ import Image from 'next/image';
 import { SectionBadge, SectionHeading } from '../lunar/Section';
 const items = [
     {
-        image: "/images/nintendo.png",
+        image: "/images/logo/sonic-logo.png",
     },
     {
-        image: "/images/astar-logo.png",
+        image: "/images/logo/allora-logo-white.png",
     },
     {
-        image: "/images/mitsubishi.png",
-    },
-    {
-        image: "/images/mazda.png",
-    },
-
-    {
-        image: "/images/biconomy.png",
+        image: "/images/logo/debridge-logo.png",
     },
 ];
 

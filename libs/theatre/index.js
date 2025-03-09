@@ -1,3 +1,4 @@
+'use client'
 import { useFrame } from '@studio-freight/hamo'
 import { createRafDriver, getProject, onChange } from '@theatre/core'
 import {

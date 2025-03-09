@@ -1,3 +1,4 @@
+"use client"
 import clsx from "clsx"
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react"
 import { useWindowScroll } from "react-use"

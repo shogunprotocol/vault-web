@@ -118,7 +118,7 @@ const VaultActionCards = () => {
                                     </div>
                                     <div className="text-right">
                                         <div className="font-belgro text-white/80 text-sm">APY</div>
-                                        <div className="font-basement text-basement-cyan text-lg">7.2%</div>
+                                        <div className="font-basement text-basement-cyan text-lg">16%</div>
                                     </div>
                                 </div>
 

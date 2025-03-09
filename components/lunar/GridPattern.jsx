@@ -1,3 +1,4 @@
+"use client"
 import { createContext, useContext, useId } from "react"
 
 const GridPatternContext = createContext()

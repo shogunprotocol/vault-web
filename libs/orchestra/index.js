@@ -1,3 +1,4 @@
+'use client'
 import { del, get, set } from 'idb-keyval'
 // import { Studio } from '@/lib/theatre/studio'
 import { broadcast } from '@/libs/zustand-broadcast'

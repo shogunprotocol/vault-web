@@ -9,28 +9,28 @@ import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "../../constants";
 
 const strategies = [
   {
+    name: "deBridge",
+    description: "Cross-chain bridging from Sonic to Arbitrum for Aave yield",
+    icon: "🌉",
+    details: "Secure cross-chain asset transfer to access higher Aave yields on Arbitrum",
+    status: "Active",
+    protocol: "Sonic to Arbitrum",
+  },
+  {
+    name: "Beefy Finance",
+    description: "Auto-compounding yield optimizer across multiple protocols",
+    icon: "🐮",
+    details: "Automated yield compounding to maximize returns with minimal gas costs",
+    status: "Active",
+    protocol: "Beefy",
+  },
+  {
     name: "Silo Finance",
-    description: "Automated lending optimization across multiple markets",
+    description: "Isolated lending markets with optimized risk management",
     icon: "💰",
     details: "AI-driven position management for maximum capital efficiency",
     status: "Active",
-    protocol: "Aave V3",
-  },
-  {
-    name: "Beets",
-    description: "Dynamic liquidity provision and yield farming",
-    icon: "⚖️",
-    details: "Algorithmic pool selection and position rebalancing",
-    status: "Active",
-    protocol: "Beethoven X",
-  },
-  {
-    name: "Origin Sonic",
-    description: "Advanced liquid staking strategy",
-    icon: "🌊",
-    details: "Optimized validator selection and reward compounding",
-    status: "Active",
-    protocol: "Sonic",
+    protocol: "Silo",
   },
 ];
 

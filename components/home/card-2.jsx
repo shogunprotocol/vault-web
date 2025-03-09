@@ -21,8 +21,8 @@ export default function Card2() {
                 <div className="relative flex items-center justify-start">
 
                     {/* Text */}
-                    <div className="font-display text-xs font-semibold text-white sm:text-xs lg:text-sm font-belgro ml-4">
-                        Built using Astar, The Graph, Next.js, Thirdweb and GSAP.
+                    <div className="font-display text-[6px] font-semibold text-white sm:text-[8px] lg:text-[10px] font-belgro ml-4">
+                        Built using Sonic Labs, Debridge, Allora Network, Safe, Next.js, RainbowKit, Wagmi, TailwindCSS.
                     </div>
                 </div>
             </SpotlightCard>
