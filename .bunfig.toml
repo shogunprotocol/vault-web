@@ -1,0 +1,5 @@
+[install]
+peer-dependency-resolution = false
+
+[install.cache]
+disabled = false 
