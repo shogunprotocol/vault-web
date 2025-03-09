@@ -1,0 +1,5 @@
+{
+  "buildCommand": "bun install --legacy-peer-deps && bun run build",
+  "installCommand": "bun install --legacy-peer-deps",
+  "framework": "nextjs"
+} 
