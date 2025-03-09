@@ -1,15 +1,20 @@
 'use client';
 
-import { Application } from '@splinetool/runtime';
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import useHoverEffect from '../../hooks/useHoverEffect';
 import { staggerContainer, textVariant } from "../../libs/motion";
 import Button from "../lunar/Button";
 import { SectionTitle, SectionTitleFade, SectionWrapper } from "../lunar/Section";
 import MarqueeBrands from '../marquee-brands';
 import { AeroStats } from './aero-stats';
+import dynamic from 'next/dynamic';
+
+// Import Spline dynamically to ensure it only loads on the client
+const SplineCanvas = dynamic(() => import('../SplineCanvas'), {
+  ssr: false
+});
 
 export function Hero() {
     const router = useRouter();
@@ -25,15 +30,6 @@ export function Hero() {
     const goToDapp = () => {
         router.push('/council');
     };
-
-    const canvasRef = useRef(null);
-
-    useEffect(() => {
-        if (canvasRef.current) {
-            const app = new Application(canvasRef.current);
-            app.load('https://prod.spline.design/lgFTxPu1sReA4dZx/scene.splinecode');
-        }
-    }, []);
 
     return (
         <motion.div
@@ -62,7 +58,7 @@ export function Hero() {
                     </h1>
 
                     <div className="relative w-full">
-                        <canvas ref={canvasRef} className="w-full h-[400px]" />
+                        <SplineCanvas splineUrl="https://prod.spline.design/lgFTxPu1sReA4dZx/scene.splinecode" />
                     </div>
 
                     <div className="mt-8">

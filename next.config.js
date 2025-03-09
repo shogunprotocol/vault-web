@@ -26,6 +26,8 @@ const additionalNextConfig = {
     optimizeCss: true,
     nextScriptWorkers: true,
   },
+  // Skip static generation for pages with Spline 3D content
+  unstable_excludePages: ['/', '/council'],
   compiler: {
     removeConsole: process.env.NODE_ENV !== 'development',
   },
