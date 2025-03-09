@@ -1,6 +1,6 @@
 import studio from '@theatre/studio'
 import jsonminify from 'jsonminify'
-import { useCurrentProject, useCurrentRafDriver } from '@/lib/theatre'
+import { useCurrentProject, useCurrentRafDriver } from '@/libs/theatre'
 import { useEffect } from 'react'
 import s from './studio.module.scss'
 

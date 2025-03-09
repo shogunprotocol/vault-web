@@ -1,6 +1,6 @@
 import { del, get, set } from 'idb-keyval'
 // import { Studio } from '@/lib/theatre/studio'
-import { broadcast } from '@/lib/zustand-broadcast'
+import { broadcast } from '@/libs/zustand-broadcast'
 import { createContext, useContext, useEffect } from 'react'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'

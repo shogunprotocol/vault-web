@@ -25,14 +25,21 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "exclude": [
     "node_modules",
     "dist"
   ],
   "include": [
+    "**/*.ts",
+    "**/*.tsx",
     "**/*.js",
+    "**/*.jsx",
+    "**/*.d.ts",
     ".next/types/**/*.ts"
   ]
 }

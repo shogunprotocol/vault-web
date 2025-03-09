@@ -1,4 +1,4 @@
-import { useOrchestra } from '@/lib/orchestra'
+import { useOrchestra } from '@/libs/orchestra'
 import { useEffect, useState } from 'react'
 
 let studioPackage

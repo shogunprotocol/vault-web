@@ -2,7 +2,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 const path = require('path');
-const sassUtils = require(__dirname + '/lib/sass-utils');
+const sassUtils = require(__dirname + '/libs/sass-utils');
 const sassVars = require(__dirname + '/config/variables.js');
 
 const firstNextConfig = {
