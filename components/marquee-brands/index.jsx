@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { SectionBadge, SectionHeading } from '../lunar/Section';
+import { SectionBadge, SectionHeading } from '@/components/lunar/Section';
 const items = [
     {
         image: "/images/logo/sonic-logo.png",

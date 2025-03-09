@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
-import useHoverEffect from '../../hooks/useHoverEffect';
-import { staggerContainer, textVariant } from "../../libs/motion";
-import s from './home.module.scss';
+import useHoverEffect from '@/hooks/useHoverEffect';
+import { staggerContainer, textVariant } from "@/libs/motion";
+import s from '@/components/home-page/home.module.scss';
 
 const TitlesContainer = () => {
 

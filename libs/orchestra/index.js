@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect } from 'react'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { shallow } from 'zustand/shallow'
 import { createWithEqualityFn } from 'zustand/traditional'
-import s from './orchestra.module.scss'
+import s from '@/libs/orchestra/orchestra.module.scss'
 
 // avoid to display debug tools on orchestra page
 const useInternalStore = createWithEqualityFn(

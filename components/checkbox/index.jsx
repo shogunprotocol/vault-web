@@ -1,6 +1,6 @@
 // CustomCheckbox.js
 import React from 'react';
-import s from './CustomCheckbox.module.scss'; // Path to your custom CSS module
+import s from '@/components/checkbox/CustomCheckbox.module.scss'; // Path to your custom CSS module
 
 const CustomCheckbox = ({ checked, onChange, label }) => {
     return (

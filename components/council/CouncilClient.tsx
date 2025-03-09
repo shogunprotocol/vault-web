@@ -1,15 +1,15 @@
 'use client';
 
-import { Layout } from 'layouts/default';
+import { Layout } from '@/layouts/default';
 import { Suspense, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { staggerContainer, textVariant } from "../../libs/motion";
-import useHoverEffect from '../../hooks/useHoverEffect';
-import { SectionTitle, SectionTitleFade, SectionWrapper } from "../../components/lunar/Section";
+import { staggerContainer, textVariant } from "@/libs/motion";
+import useHoverEffect from '@/hooks/useHoverEffect';
+import { SectionTitle, SectionTitleFade, SectionWrapper } from "@/components/lunar/Section";
 import dynamic from 'next/dynamic';
 
 // Import Spline dynamically to ensure it only loads on the client
-const SplineCanvas = dynamic(() => import('../../components/SplineCanvas'), {
+const SplineCanvas = dynamic(() => import('@/components/SplineCanvas'), {
   ssr: false
 });
 
