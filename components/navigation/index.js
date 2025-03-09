@@ -16,7 +16,7 @@ export function Navigation() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Close navigation when pathname changes
+    // This will run whenever the pathname changes
     setIsNavOpened(false);
   }, [pathname, setIsNavOpened]);
 

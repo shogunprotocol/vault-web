@@ -33,7 +33,7 @@ const TitlesContainer = () => {
                     className={`font-basement ${s.studioRezy} `}
                     ref={rezyRef}
                 >
-                    AI Cult of Ronin
+                    Shogun
                 </motion.div>
                 <motion.div
                     variants={textVariant(0.8)}

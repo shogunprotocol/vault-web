@@ -1,9 +1,12 @@
 import Link from 'next/link';
 import cn from 'clsx';
+import { Navigation } from 'components/navigation';
 import { useStore } from 'libs/store';
 import Image from 'next/image';
 import { forwardRef } from 'react';
 import s from './header.module.scss';
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+
 
 export const Header = forwardRef((_, ref) => {
   const [isNavOpened, setIsNavOpened] = useStore(
@@ -12,6 +15,7 @@ export const Header = forwardRef((_, ref) => {
 
   return (
     <header className={s.header} ref={ref}>
+      <Navigation />
       <div className={cn('layout-block', s.head)}>
         <button
           className="font-basement"
@@ -45,11 +49,12 @@ export const Header = forwardRef((_, ref) => {
             </div>
           </Link>
         </div>
-
-        <div className="uppercase font-basement flex">
+        
+        <div className="uppercase font-basement flex items-center">
           <Link href="/council" className="link px-4">
             The Council
           </Link>
+          <ConnectButton />
         </div>
       </div>
     </header>

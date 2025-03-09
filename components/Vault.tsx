@@ -19,7 +19,7 @@ import {
 } from "../components/ui/card";
 import { Label } from "../components/ui/label";
 import { useToast } from "../hooks/use-toast";
-import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "../constants";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "../constants/index";
 
 export function Vault() {
   const { address: userAddress } = useAccount();
