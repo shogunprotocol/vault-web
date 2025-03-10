@@ -123,6 +123,12 @@ const additionalNextConfig = {
       },
     );
 
+    // Skip processing of SCSS modules during build
+    config.module.rules.push({
+      test: /\.module\.scss$/,
+      use: 'null-loader'
+    });
+
     return config;
   },
   headers: async () => {
