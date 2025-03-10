@@ -31,7 +31,7 @@ const additionalNextConfig = {
   transpilePackages: ['@studio-freight/compono'],
   experimental: {
     optimizeCss: true,
-    nextScriptWorkers: true,
+    nextScriptWorkers: false,
   },
   // Skip static generation for pages with Spline 3D content
   unstable_excludePages: ['/', '/council'],

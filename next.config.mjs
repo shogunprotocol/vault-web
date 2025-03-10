@@ -37,7 +37,7 @@
    transpilePackages: ['@studio-freight/compono'],
    experimental: {
      optimizeCss: true,
-     nextScriptWorkers: true,
+     nextScriptWorkers: false,
    },
    // Remove unstable_excludePages as it's not recognized in Next.js 15
    compiler: {
