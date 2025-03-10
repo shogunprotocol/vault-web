@@ -1,4 +1,4 @@
-import { SpotlightButton } from "../../components/lunar/SpotlightButton";
+import { SpotlightButton } from "@/components/lunar/SpotlightButton";
 
 export default function Button({ text, onClick }) {
     return (

@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
-import { staggerContainer, textVariant } from "../../libs/motion";
-import s from './home.module.scss';
+import { staggerContainer, textVariant } from "@/libs/motion";
+import s from '@/components/home-page/home.module.scss';
 
 const VideoContainer = () => {
     const [isLoading, setIsLoading] = useState(true);

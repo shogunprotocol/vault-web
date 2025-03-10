@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import cn from 'clsx';
-import { Navigation } from 'components/navigation';
-import { useStore } from 'libs/store';
+import { Navigation } from '@/components/navigation';
+import { useStore } from '@/libs/store';
 import Image from 'next/image';
 import { forwardRef } from 'react';
-import s from './header.module.scss';
+import s from '@/components/header/header.module.scss';
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 

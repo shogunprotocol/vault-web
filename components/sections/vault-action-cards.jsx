@@ -4,13 +4,13 @@ import { useDisclosure } from "@nextui-org/react";
 import { Application } from '@splinetool/runtime';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import useHoverEffect from '../../hooks/useHoverEffect';
-import { staggerContainer, textVariant } from "../../libs/motion";
-import Button from "../lunar/Button";
-import { GridPattern } from "../lunar/GridPattern";
-import { SectionTitle, SectionTitleFade, SectionWrapper } from "../lunar/Section";
-import { SpotlightCard } from "../lunar/SpotlightCard";
-import TransactionModal from "../modals";
+import useHoverEffect from '@/hooks/useHoverEffect';
+import { staggerContainer, textVariant } from "@/libs/motion";
+import Button from "@/components/lunar/Button";
+import { GridPattern } from "@/components/lunar/GridPattern";
+import { SectionTitle, SectionTitleFade, SectionWrapper } from "@/components/lunar/Section";
+import { SpotlightCard } from "@/components/lunar/SpotlightCard";
+import TransactionModal from "@/components/modals";
 
 const VaultActionCards = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();

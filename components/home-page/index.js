@@ -1,12 +1,12 @@
 'use client';
 
-import { Layout } from 'layouts/default';
-import CardGrid from './card-grid';
-import { Hero } from '../../components/sections/council';
-import { SecondaryFeatures } from '../../components/sections/features';
-import s from './home.module.scss';
-import TitlesContainer from './titles-container';
-import VideoContainer from './video-container';
+import { Layout } from '@/layouts/default';
+import CardGrid from '@/components/home/card-grid';
+import { Hero } from '@/components/sections/council';
+import { SecondaryFeatures } from '@/components/sections/features';
+import s from '@/components/home-page/home.module.scss';
+import TitlesContainer from '@/components/home-page/titles-container';
+import VideoContainer from '@/components/home-page/video-container';
 import { Suspense } from 'react';
 
 export default function Home() {

@@ -3,13 +3,13 @@
 import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
-import useHoverEffect from '../../hooks/useHoverEffect';
-import { staggerContainer, textVariant } from "../../libs/motion";
-import { SectionTitle, SectionTitleFade, SectionWrapper } from "../lunar/Section";
+import useHoverEffect from '@/hooks/useHoverEffect';
+import { staggerContainer, textVariant } from "@/libs/motion";
+import { SectionTitle, SectionTitleFade, SectionWrapper } from "@/components/lunar/Section";
 import dynamic from 'next/dynamic';
 
 // Import Spline dynamically to ensure it only loads on the client
-const SplineCanvas = dynamic(() => import('../SplineCanvas'), {
+const SplineCanvas = dynamic(() => import('@/components/SplineCanvas'), {
   ssr: false
 });
 

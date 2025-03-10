@@ -3,12 +3,12 @@
 import { Cursor, CustomHead } from '@studio-freight/compono'
 import { Lenis, useLenis } from '@studio-freight/react-lenis'
 import cn from 'clsx'
-import { Footer } from 'components/footer'
-import { Header } from 'components/header'
-import { Scrollbar } from 'components/scrollbar'
+import { Footer } from '@/components/footer'
+import { Header } from '@/components/header'
+import { Scrollbar } from '@/components/scrollbar'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, Suspense } from 'react'
-import s from './layout.module.scss'
+import s from '@/layouts/default/layout.module.scss'
 import Link from 'next/link'
 
 // Create a separate component for the scroll handling

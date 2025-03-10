@@ -2,9 +2,9 @@
 
 import { useRect } from '@studio-freight/hamo';
 import { useLenis } from '@studio-freight/react-lenis';
-import { mapRange } from 'libs/maths';
+import { mapRange } from '@/libs/maths';
 import { useEffect, useRef } from 'react';
-import s from './scrollbar.module.scss';
+import s from '@/components/scrollbar/scrollbar.module.scss';
 
 export function Scrollbar() {
   const thumbRef = useRef();

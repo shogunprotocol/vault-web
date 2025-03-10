@@ -1,10 +1,10 @@
 "use client"
 
 import { motion } from 'framer-motion';
-import { textVariant } from "../../libs/motion";
+import { textVariant } from "@/libs/motion";
 
-import { GridPattern } from "../lunar/GridPattern";
-import { SpotlightCard } from "../lunar/SpotlightCard";
+import { GridPattern } from "@/components/lunar/GridPattern";
+import { SpotlightCard } from "@/components/lunar/SpotlightCard";
 
 export default function Card3() {
     const totalTVL = "1.2M"; // Replace with actual TVL amount

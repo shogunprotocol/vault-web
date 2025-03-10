@@ -6,7 +6,7 @@ import cn from 'clsx';
 import { useStore } from 'libs/store';
 import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import s from './navigation.module.scss';
+import s from '@/components/navigation/navigation.module.scss';
 
 export function Navigation() {
   const [isNavOpened, setIsNavOpened] = useStore(

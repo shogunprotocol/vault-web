@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import cn from 'clsx';
-import s from './footer.module.scss';
+import s from '@/components/footer/footer.module.scss';
 
 export function Footer() {
   return (

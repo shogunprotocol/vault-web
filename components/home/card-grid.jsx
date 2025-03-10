@@ -4,12 +4,12 @@
 'use client';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { staggerContainer } from "../../libs/motion";
-import Card1 from './card-1';
-import Card2 from './card-2';
-import Card3 from './card-3';
-import Card4 from './card-4';
-import Card5 from './card-5';
+import { staggerContainer } from "@/libs/motion";
+import Card1 from '@/components/home/card-1';
+import Card2 from '@/components/home/card-2';
+import Card3 from '@/components/home/card-3';
+import Card4 from '@/components/home/card-4';
+import Card5 from '@/components/home/card-5';
 const CardGrid = () => {
   return (
     <motion.div

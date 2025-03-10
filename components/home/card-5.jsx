@@ -1,9 +1,9 @@
 "use client"
 
 import { motion } from 'framer-motion';
-import { textVariant } from "../../libs/motion";
-import { DotPattern } from "../lunar/DotPattern";
-import { SpotlightCard } from "../lunar/SpotlightCard";
+import { textVariant } from "@/libs/motion";
+import { DotPattern } from "@/components/lunar/DotPattern";
+import { SpotlightCard } from "@/components/lunar/SpotlightCard";
 
 export default function Card5() {
 

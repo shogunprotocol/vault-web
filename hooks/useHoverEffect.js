@@ -1,5 +1,5 @@
 // useHoverEffect.js
-import { colors } from 'config/variables';
+import { colors } from '@/config/variables';
 import gsap from 'gsap';
 import { useEffect } from 'react';
 
