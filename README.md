@@ -27,7 +27,7 @@ Shōgun is currently live on Sonic mainnet with two active DeFi strategies that 
 * **AI Strategy Manager:** [strategies-ai-sonic](https://github.com/lausuarez02/strategies-ai-sonic/)
 * **Agent Implementation:** [strategies-agent-sonic](https://github.com/lausuarez02/strategies-agent-sonic/)
 * **Smart Contracts AI:** [strategies-contracts-sonic](https://github.com/lausuarez02/strategies-contracts-sonic/)
-* **Smart Contracts Investing:** [contracts-sonic]([https://github.com/lausuarez02/strategies-contracts-sonic/](https://github.com/tomi204/vaults-hackathon)
+* **Smart Contracts Investing:** [contracts-sonic](https://github.com/lausuarez02/strategies-contracts-sonic/](https://github.com/tomi204/vaults-hackathon/)
 
 ## Tech Stack
 
