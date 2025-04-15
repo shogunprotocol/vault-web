@@ -18,7 +18,7 @@ export function SiteReadyProvider({ children }) {
   const timeoutsRef = useRef([]);
   
   useEffect(() => {
-    console.log('🚀 Starting site loading sequence');
+    console.log('⚔️ Summoning the Ronin Council');
 
     // Clear all timeouts when unmounting
     return () => {
@@ -27,11 +27,11 @@ export function SiteReadyProvider({ children }) {
   }, []);
   
   useEffect(() => {
-    console.log('🚀 Starting site loading sequence');
+    console.log('⚔️ Summoning the Ronin Council');
     startMeasure('TotalLoadTime');
     
-    // Stage 1: Set initial loading state
-    setLoadingStage('ui-ready');
+    // Stage 1: Set initial loading state with a Shogun-themed message
+    setLoadingStage('preparing-dojo');
     
     // Wait a bit to ensure UI is ready before starting resource loading
     const initialTimer = setTimeout(() => {
@@ -42,20 +42,20 @@ export function SiteReadyProvider({ children }) {
     
     // Stage 2: Preload resources
     if (isReady) {
-      console.log('🔄 Starting resource preloading');
+      console.log('🏯 Gathering Ronin warriors');
       startMeasure('ResourcePreload');
       
       preloadResources()
         .then(() => {
           endMeasure('ResourcePreload');
-          console.log('📦 Resources preloaded');
-          setLoadingStage('enabling-scroll');
+          console.log('⚡ AI strategy engines online');
+          setLoadingStage('forging-katana');
           
           // Wait a bit to ensure everything is rendered
           const postLoadTimer = setTimeout(() => {
             document.body.style.overflow = "auto";
             setIsFullyLoaded(true);
-            setLoadingStage('complete');
+            setLoadingStage('honor-bound');
             endMeasure('TotalLoadTime');
             
             // Report overall performance
@@ -65,12 +65,12 @@ export function SiteReadyProvider({ children }) {
             // Enable animations after a small delay - staggered approach
             const enableBasicAnimTimer = setTimeout(() => {
               // First enable basic animations
-              console.log('🎭 Enabling basic animations');
+              console.log('⚔️ Deploying Ronin strategies');
               setAnimationsEnabled(true);
               
               // Then do some cleanup to reduce memory pressure
               const cleanupTimer = setTimeout(() => {
-                console.log('🧹 Running post-animation cleanup');
+                console.log('🔥 Optimizing battle performance');
                 // Force a garbage collection friendly state
                 const gcPrompt = () => {
                   const arr = new Array(1000).fill(0);
@@ -91,7 +91,7 @@ export function SiteReadyProvider({ children }) {
     
     // Initially disable scrolling
     document.body.style.overflow = "hidden";
-    console.log('🛑 Scrolling disabled during load');
+    console.log('🛡️ Securing the perimeter');
     
     return () => {
       timeoutsRef.current.forEach(clearTimeout);
@@ -102,13 +102,13 @@ export function SiteReadyProvider({ children }) {
     if (isFullyLoaded && animationsEnabled) {
       // A short delay to ensure everything is settled
       const scrollTimer = setTimeout(() => {
-        console.log('🖱 Ensuring smooth scrolling is ready');
+        console.log('🏯 Shogun fortress operational');
         document.body.style.overflow = 'auto'; // Make sure scrolling is enabled
         
         // Set a short timer to check for any scroll issues
         const scrollCheckTimer = setTimeout(() => {
           const scrollY = window.scrollY;
-          console.log(`Current scroll position: ${scrollY}px`);
+          console.log(`Council chamber depth: ${scrollY}px`);
           
           // Try to scroll a tiny bit to "prime" the scroll system
           if (scrollY === 0) {

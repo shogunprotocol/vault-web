@@ -9,7 +9,7 @@ const HomePage = dynamicImport(() => import('../components/home-page/index'), {
   loading: () => (
     <div className="min-h-[80vh] bg-black text-white flex items-center justify-center">
       <div className="text-center">
-        <h1 className="text-4xl mb-4">Vault</h1>
+        <h1 className="text-4xl mb-4">SuperVault</h1>
         <p>Loading the experience...</p>
       </div>
     </div>
@@ -27,17 +27,6 @@ export default function Home() {
     
     return () => clearTimeout(timer);
   }, []);
-  
-  if (!isLoaded) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
-        <div className="text-center text-white">
-          <h1 className="text-4xl mb-4 font-basement">Vault</h1>
-          <div className="animate-pulse">Loading the experience...</div>
-        </div>
-      </div>
-    );
-  }
   
   return (
     <Suspense fallback={null}>
