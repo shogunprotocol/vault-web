@@ -2,7 +2,7 @@
 
 import { Layout } from '@/layouts/default';
 import CardGrid from '@/components/home/card-grid';
-import { Hero } from '@/components/sections/council';
+// import { Hero } from '@/components/sections/council';
 import { SecondaryFeatures } from '@/components/sections/features';
 import s from '@/components/home-page/home.module.scss';
 import TitlesContainer from '@/components/home-page/titles-container';
@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <Layout theme="dark" className={s.home}>
       <div className="relative">
-        {/* //video component replace */}
+        {/* Video background first */}
         <div className="video-wrapper font-aeonik">
           <VideoContainer />
           <div className={s.container}>
@@ -25,8 +25,10 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      
+      {/* Secondary features should come before Hero/Council section */}
       <SecondaryFeatures />
-      <Hero />
+
     </Layout>
   );
 } 

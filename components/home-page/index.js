@@ -16,10 +16,10 @@ const LazySecondaryFeatures = dynamic(() => import('@/components/sections/featur
   loading: () => <div className="min-h-[400px]" />
 });
 
-const LazyHero = dynamic(() => import('@/components/sections/council').then(mod => ({ default: mod.Hero })), {
-  ssr: false,
-  loading: () => <div className="min-h-[400px]" />
-});
+// const LazyHero = dynamic(() => import('@/components/sections/council').then(mod => ({ default: mod.Hero })), {
+//   ssr: false,
+//   loading: () => <div className="min-h-[400px]" />
+// });
 
 // Memoize the Home component to prevent re-renders
 const Home = React.memo(() => {
@@ -64,7 +64,7 @@ const Home = React.memo(() => {
       {componentsLoaded && (
         <div>
           <LazySecondaryFeatures />
-          <LazyHero />
+          {/* <LazyHero /> */}
         </div>
       )}
     </Layout>

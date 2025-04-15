@@ -29,7 +29,7 @@ export default function Home() {
         </div>
       </div>
       <SecondaryFeatures />
-      <Hero />
+      {/* <Hero /> */}
     </Layout>
     </Suspense>
 

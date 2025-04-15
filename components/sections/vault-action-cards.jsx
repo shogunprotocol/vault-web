@@ -2,7 +2,7 @@
 
 import { useDisclosure } from "@nextui-org/react";
 import { motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import useHoverEffect from '@/hooks/useHoverEffect';
 import { staggerContainer, textVariant } from "@/libs/motion";
 import Button from "@/components/lunar/Button";
@@ -35,6 +35,15 @@ const VaultActionCards = () => {
     // Sample Spline URL - update with your actual URL
     // If you don't have a specific one, this sample will show something generic
     const splineUrl = 'https://prod.spline.design/iGbfEoVSWBE4GOHq/scene.splinecode';
+
+    // Simplify the Spline loading state management
+    const [vaultSplineLoaded, setVaultSplineLoaded] = useState(false);
+
+    // Directly handle the onLoad callback
+    const handleVaultSplineLoad = useCallback((app) => {
+        console.log('Vault Spline loaded!');
+        setVaultSplineLoaded(true);
+    }, []);
 
     const handleAction = (type) => {
         setTransactionType(type);
@@ -78,7 +87,26 @@ const VaultActionCards = () => {
                             <div className="relative flex flex-col items-center justify-center w-full h-full">
                                 {/* 3D Visualization */}
                                 <div className="canvas-container" style={{ position: 'relative', width: '100%', height: '300px' }}>
-                                    <SplineCanvas splineUrl={splineUrl} />
+                                    {/* Custom loading overlay that only shows while loading */}
+                                    {!vaultSplineLoaded && (
+                                        <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-zinc-900/60 backdrop-blur-sm z-50">
+                                            <div className="text-center">
+                                                <div className="font-basement text-lg text-basement-cyan">Loading Vault 3D</div>
+                                                <div className="w-32 h-1 bg-gray-800 mt-2 mx-auto rounded overflow-hidden">
+                                                    <div className="h-full bg-cyan-500 rounded animate-pulse" style={{width: '70%'}}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                    {/* The SplineCanvas with hideLoadingUI=true to prevent its internal loader from showing */}
+                                    <SplineCanvas 
+                                        splineUrl={splineUrl}
+                                        onLoad={handleVaultSplineLoad}
+                                        className=""
+                                        hideLoadingUI={true}
+                                        waitForSiteReady={false}
+                                    />
                                 </div>
 
                                 <div className="absolute top-1/2 left-[-100px] -translate-y-1/2">

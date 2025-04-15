@@ -42,6 +42,12 @@ const SplineCanvas = memo(
         setLoading(true);
         startMeasure(`SplineLoad-${sceneUrl.substring(sceneUrl.lastIndexOf('/') + 1)}`);
         
+        // Check WebGL support first
+        const gl = canvasRef.current.getContext('webgl2') || canvasRef.current.getContext('webgl');
+        if (!gl) {
+          throw new Error('WebGL not supported in this browser');
+        }
+        
         // Create a new Spline app instance
         const app = new Application(canvasRef.current);
         
@@ -141,6 +147,7 @@ const SplineCanvas = memo(
             }}
           />
         )}
+        {/* Only show loading UI if not explicitly hidden */}
         {loading && !hideLoadingUI && (
           <div className="spline-loading absolute inset-0 flex items-center justify-center text-center bg-zinc-900/80 backdrop-blur-sm rounded-lg z-10">
             <div>
