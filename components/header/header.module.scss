@@ -2,10 +2,14 @@
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 60%, rgba(0,0,0,0) 100%);
+  backdrop-filter: blur(4px);
+  padding: 1rem 0;
+  transition: all 0.3s ease;
   width: 100%;
-  z-index: 1;
   color: var(--theme-secondary);
-  padding: mobile-vw(20px) 0;
 
   @include desktop {
     padding: desktop-vw(40px) 0;

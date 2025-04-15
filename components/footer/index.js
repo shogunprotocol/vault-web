@@ -5,11 +5,11 @@ import s from '@/components/footer/footer.module.scss';
 export function Footer() {
   return (
     <footer className={cn(s.footer, 'layout-block')}>
-      <Link href="mailto:cryptopoeta@gmail.com" className="link">
+      {/* <Link href="mailto:@gmail.com" className="link">
         mail
-      </Link>
+      </Link> */}
 
-      <Link href="https://x.com/criptopoeta" className="link">
+      <Link href="https://x.com/shogun_fi" className="link">
         twitter
       </Link>
     </footer>
