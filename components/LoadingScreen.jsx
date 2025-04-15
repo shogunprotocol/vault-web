@@ -64,7 +64,7 @@ export default function LoadingScreen() {
       onClick={handleTap}
     >
       <div className="text-center text-white">
-        <h1 className="text-4xl mb-8 font-basement">Vault</h1>
+        <h1 className="text-4xl mb-8 font-basement">SuperVault</h1>
         <div className="w-64 bg-gray-800 rounded-full h-2.5 mb-4">
           <div 
             className="bg-basement-cyan h-2.5 rounded-full" 
