@@ -118,16 +118,15 @@
     background: rgba(0, 0, 0, 0.3); /* Slight overlay to make text more readable */
     z-index: 2;
   }
-}
 
-/* Ensure video takes full space and covers container */
-:global(.background-video) {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-  transform: translateZ(0);
+  :global(.background-video) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transform: translateZ(0);
+  }
 }

@@ -74,6 +74,14 @@ export function Hero() {
     const isScrolling = useScrollLock();
     const { isFullyLoaded, animationsEnabled } = useSiteReady();
 
+    // Add a delay before marking as loaded to ensure only one loading indicator shows
+    const handleSplineLoad = () => {
+        // Small delay to prevent both loading indicators showing at once
+        setTimeout(() => {
+            setSplineLoaded(true);
+        }, 100);
+    };
+
     // Use simplified version until fully loaded
     if (!isFullyLoaded || !animationsEnabled) {
         return (
@@ -157,7 +165,7 @@ export function Hero() {
                                 <div className="opacity-0 pointer-events-none absolute top-0 left-0 w-1 h-1">
                                     <SplineCanvas 
                                         splineUrl={splineUrl}
-                                        onLoad={() => setSplineLoaded(true)}
+                                        onLoad={handleSplineLoad}
                                     />
                                 </div>
                             </div>
