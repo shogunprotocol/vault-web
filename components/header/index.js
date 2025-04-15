@@ -33,9 +33,10 @@ export const Header = forwardRef((_, ref) => {
               <Image
                 src="/images/logo/ai-cult-icon.png"
                 alt="Logo"
+                style={{ objectFit: "contain" }}
                 width={75}
                 height={75}
-                objectFit="contain"
+                priority={true}
                 className={s.logoImage} // This will have the hover effect
               />
               <Image

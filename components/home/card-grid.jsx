@@ -16,7 +16,7 @@ const CardGrid = () => {
       variants={staggerContainer}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: false, amount: 0.25 }}
+      viewport={{ once: true, amount: 0.25 }}
       className="p-w sm:p-4 lg:p-20 align-end">
       <div className="grid grid-cols-1 sm:grid sm:grid-cols-4 lg:grid-cols-2 grid-rows-3 lg:grid-rows-3 gap-2 md:gap-2">
         <Card1 />

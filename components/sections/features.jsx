@@ -29,7 +29,7 @@ export function SecondaryFeatures() {
             variants={staggerContainer}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: false, amount: 0.1 }}
+            viewport={{ once: true, amount: 0.1 }}
         >
             <SectionWrapperRounded>
                 <motion.div

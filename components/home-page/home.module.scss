@@ -1,7 +1,8 @@
 .home {
   font-family: sans-serif;
   font-weight: 700;
-  // Updated to 100vh to fill the viewport height
+  position: relative;
+  min-height: 100vh;
 
   .title {
     display: flex;
@@ -14,6 +15,8 @@
     max-width: desktop-vw(1400px);
     margin: 100px -10px 0 auto;
     text-transform: uppercase;
+    position: relative;
+    z-index: 5;
   }
 
   .word {
@@ -23,16 +26,20 @@
 
   .titleText {
     display: block;
+    text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   }
   .titleText2 {
     display: block;
     color: rgb(202, 202, 202);
+    position: relative;
+    z-index: 2;
   }
 
   .studioRezy {
     font-size: desktop-vw(64px);
     display: block;
     margin-bottom: desktop-vw(20px);
+    text-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -53,14 +60,15 @@
 .container {
   position: relative;
   width: 100%;
-  z-index: 0;
+  z-index: 3;
+  pointer-events: auto;
 }
 
 .content {
   position: relative;
   top: 0;
   left: 0;
-  z-index: 0;
+  z-index: 5;
   border-radius: 10px;
   @media (min-width: 768px) {
     position: relative;
@@ -71,7 +79,7 @@
   position: relative;
   bottom: 500px;
   left: 0;
-  z-index: -1;
+  z-index: 2;
   padding: 10px;
   @media (min-width: 768px) {
     position: absolute;
@@ -82,7 +90,44 @@
 }
 .video-wrapper {
   position: relative;
-  z-index: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.videoContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  will-change: transform;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Slight overlay to make text more readable */
+    z-index: 2;
+  }
+}
+
+/* Ensure video takes full space and covers container */
+:global(.background-video) {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  transform: translateZ(0);
 }

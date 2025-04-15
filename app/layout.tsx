@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/global.scss";
-import { RootProvider } from './providers'
+import ClientLayout from './client-layout';
+import { metadata } from './metadata';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,10 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Vaults - Shōgun",
-  description: "AI-Powered Smart Vaults",
-};
+export { metadata };
 
 export default function RootLayout({
   children,
@@ -26,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <RootProvider>
+        <ClientLayout>
           {children}
-        </RootProvider>
+        </ClientLayout>
       </body>
     </html>
   );

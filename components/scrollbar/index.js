@@ -5,6 +5,7 @@ import { useLenis } from '@studio-freight/react-lenis';
 import { mapRange } from '@/libs/maths';
 import { useEffect, useRef } from 'react';
 import s from '@/components/scrollbar/scrollbar.module.scss';
+import { throttle } from '@/libs/throttle';
 
 export function Scrollbar() {
   const thumbRef = useRef();
@@ -13,20 +14,23 @@ export function Scrollbar() {
   const [thumbMeasureRef, { height: thumbHeight }] = useRect();
 
   useLenis(
-    ({ scroll, limit }) => {
+    throttle(({ scroll, limit }) => {
       const progress = scroll / limit;
 
-      thumbRef.current.style.transform = `translate3d(0,${
-        progress * (innerHeight - thumbHeight)
-      }px,0)`;
-    },
+      if (thumbRef.current) {
+        thumbRef.current.style.transform = `translate3d(0,${
+          progress * (innerHeight - thumbHeight)
+        }px,0)`;
+      }
+    }, 16), // 16ms throttle (approximately 60fps)
     [innerHeight, thumbHeight],
   );
 
   useEffect(() => {
     let start = null;
 
-    function onPointerMove(e) {
+    // Define the throttled function
+    const throttledOnPointerMove = throttle(function(e) {
       if (!start) return;
       e.preventDefault();
 
@@ -38,7 +42,7 @@ export function Scrollbar() {
         lenis.limit,
       );
       lenis.scrollTo(scroll, { immediate: true });
-    }
+    }, 20); // Small throttle for smoother scrolling
 
     function onPointerDown(e) {
       start = e.offsetY;
@@ -49,7 +53,8 @@ export function Scrollbar() {
     }
 
     thumbRef.current?.addEventListener('pointerdown', onPointerDown, false);
-    window.addEventListener('pointermove', onPointerMove, false);
+    // Use the throttled function instead
+    window.addEventListener('pointermove', throttledOnPointerMove, false);
     window.addEventListener('pointerup', onPointerUp, false);
 
     return () => {
@@ -58,10 +63,11 @@ export function Scrollbar() {
         onPointerDown,
         false,
       );
-      window.removeEventListener('pointermove', onPointerMove, false);
+      // Remove the throttled function
+      window.removeEventListener('pointermove', throttledOnPointerMove, false);
       window.removeEventListener('pointerup', onPointerUp, false);
     };
-  }, [lenis, innerHeight]);
+  }, [lenis, innerHeight, thumbHeight]); // Add thumbHeight to dependency array
 
   return (
     <div className={s.scrollbar}>

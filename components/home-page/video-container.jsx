@@ -1,72 +1,150 @@
 'use client';
-import { motion } from 'framer-motion';
-import React, { useState, useEffect } from 'react';
-import { staggerContainer, textVariant } from "@/libs/motion";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import s from '@/components/home-page/home.module.scss';
+import { useSiteReady } from '@/libs/site-ready-context';
 
-const VideoContainer = () => {
+const VideoContainer = React.memo(() => {
     const [isLoading, setIsLoading] = useState(true);
+    const [loadFailed, setLoadFailed] = useState(false);
+    const [videoLoaded, setVideoLoaded] = useState(false);
+    const videoRef = useRef(null);
+    const { isFullyLoaded } = useSiteReady();
     
-    // Lower resolution video for mobile devices
-    const videoSrc = {
-        highRes: "https://mx-assets.ams3.digitaloceanspaces.com/videos/multiversx-header-2k.mp4#t=0.1",
-        lowRes: "/video/540p_belt.mp4"
-    };
+    // Track if component is visible in viewport
+    const containerRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(true);
     
-    // Detect if on mobile for responsive optimization
-    const [isMobile, setIsMobile] = useState(false);
-    
+    // Set up intersection observer to track visibility
     useEffect(() => {
-        // Simple mobile detection
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth <= 768);
+        if (!containerRef.current) return;
+        
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                setIsVisible(entry.isIntersecting);
+                
+                // If video was already loaded and is now visible again, make sure it's playing
+                if (entry.isIntersecting && videoLoaded && videoRef.current) {
+                    videoRef.current.play().catch(err => {
+                        console.warn('Could not resume video playback:', err);
+                    });
+                }
+            },
+            { threshold: 0.1 } // 10% of the element is visible
+        );
+        
+        observer.observe(containerRef.current);
+        return () => observer.disconnect();
+    }, [videoLoaded]);
+    
+    // Set up video loading - only done once
+    useEffect(() => {
+        if (!isFullyLoaded || !videoRef.current) return;
+        
+        // Only load the video once
+        if (videoLoaded) return;
+        
+        console.log('🎬 Starting video setup');
+        
+        // Direct source assignment and loading
+        videoRef.current.src = "/video/540p_belt.mp4";
+        videoRef.current.load();
+        
+        // Set fallback timeout in case video never loads
+        const fallbackTimer = setTimeout(() => {
+            console.log('⚠️ Video load timed out, showing placeholder');
+            setLoadFailed(true);
+            setIsLoading(false);
+        }, 8000);
+        
+        // Play video as soon as it's ready
+        const handleCanPlay = () => {
+            console.log('✅ Video can play now, starting playback');
+            try {
+                videoRef.current.play();
+                setIsLoading(false);
+                setVideoLoaded(true);
+            } catch (err) {
+                console.error('❌ Video play error:', err);
+                setLoadFailed(true);
+                setIsLoading(false);
+            }
         };
         
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
+        videoRef.current.addEventListener('canplay', handleCanPlay);
+        videoRef.current.addEventListener('error', () => {
+            console.error('❌ Video load error');
+            setLoadFailed(true);
+            setIsLoading(false);
+        });
+        
+        return () => {
+            if (videoRef.current) {
+                videoRef.current.removeEventListener('canplay', handleCanPlay);
+            }
+            clearTimeout(fallbackTimer);
+        };
+    }, [isFullyLoaded, videoLoaded]);
     
-    // Video source based on device
-    const currentSrc = isMobile ? videoSrc.lowRes : videoSrc.highRes;
-
+    // Maintain video playback when scrolling back to view
+    useEffect(() => {
+        if (isVisible && videoLoaded && videoRef.current && videoRef.current.paused) {
+            videoRef.current.play().catch(err => {
+                console.warn('Failed to resume video:', err);
+            });
+        }
+    }, [isVisible, videoLoaded]);
+    
     return (
-        <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.1 }}
-        >
-            {isLoading && (
-                <div className={s.videoPlaceholder}>
-                    {/* Optional loading indicator or static placeholder image */}
+        <div ref={containerRef} className={s.videoContainer}>
+            {/* Placeholder/overlay - only shown during loading or on failure */}
+            {(isLoading || loadFailed) && (
+                <div 
+                    className="video-placeholder"
+                    style={{ 
+                        backgroundImage: `url('/images/placeholder-video.png')`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        opacity: isLoading || loadFailed ? 1 : 0,
+                        transition: 'opacity 0.8s ease-in-out',
+                        zIndex: 2
+                    }}
+                >
+                    {isLoading && !loadFailed && (
+                        <div className="loading-indicator flex items-center justify-center h-full">
+                            <div className="bg-black bg-opacity-50 p-4 rounded-lg">
+                                <div className="text-white">Loading video...</div>
+                                <div className="w-full bg-gray-700 h-1 mt-2">
+                                    <div className="bg-cyan-400 h-1 animate-pulse" style={{width: '70%'}}></div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             )}
             
-            <motion.video
-                variants={textVariant(0.3)}
-                autoPlay 
-                muted 
-                loop 
-                className={s.backgroundVideo}
-                preload="auto"
-                poster="/images/placeholder-video.png" // Add a poster image
-                onCanPlay={() => setIsLoading(false)}
-                style={{ opacity: isLoading ? 0 : 1 }}
+            {/* Video element */}
+            <video
+                ref={videoRef}
+                className="background-video"
+                muted
+                loop
                 playsInline
-            >
-                <source
-                    src={currentSrc}
-                    type="video/mp4"
-                />
-                {/* Add WebM format for better performance in supported browsers */}
-                <source 
-                    src={currentSrc.replace('.mp4', '.webm')}
-                    type="video/webm"
-                />
-            </motion.video>
-        </motion.div>
+                autoPlay
+                poster="/images/placeholder-video.png"
+                style={{ 
+                    opacity: !isLoading && !loadFailed ? 1 : 0,
+                    transition: 'opacity 0.8s ease-in-out'
+                }}
+            />
+        </div>
     );
-};
+});
+
+VideoContainer.displayName = 'VideoContainer';
 
 export default VideoContainer;

@@ -36,7 +36,7 @@ export const slideIn = (direction, type, delay, duration) => ({
   },
 });
 
-export const staggerContainer = (staggerChildren, delayChildren) => ({
+export const staggerContainer = (staggerChildren = 0.2, delayChildren = 0.1) => ({
   hidden: {},
   show: {
     transition: {
@@ -48,15 +48,12 @@ export const staggerContainer = (staggerChildren, delayChildren) => ({
 
 export const textVariant = (delay) => ({
   hidden: {
-    y: 50,
     opacity: 0,
   },
   show: {
-    y: 0,
     opacity: 1,
     transition: {
-      type: 'spring',
-      duration: 1.25,
+      duration: 0.4,
       delay,
     },
   },
