@@ -12,6 +12,7 @@ import {
     SectionTitleFade,
     SectionWrapperRounded,
 } from "../lunar/Section";
+import ComingSoonInline from '@/components/ComingSoonInline';
 
 export function SecondaryFeatures() {
     const titleRef = useRef(null);
@@ -54,7 +55,7 @@ export function SecondaryFeatures() {
                             </motion.div>
                         </SectionDescription>
                     </SectionHeadingHighlighted>
-                    <div className="canvas-container" style={{ position: 'relative', width: '100%', height: '300px' }}>
+                    <div className="canvas-container" style={{ position: 'relative', width: '100%', height: '400px' }}>
                         <div 
                             className="relative transform-gpu overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(var(--spotlight-size)_circle_at_var(--x)_var(--y),var(--spotlight-color-stops))] relative w-full rounded-xl bg-white/10 p-6" 
                             style={{
@@ -62,7 +63,9 @@ export function SecondaryFeatures() {
                                 '--y': '50%', 
                                 '--spotlight-color-stops': '#1cd1c6,#407cff,rgba(0, 255, 247, 0.2)', 
                                 '--spotlight-size': '250px',
-                                height: '100%'
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column'
                             }}
                         >
                             <div className="absolute inset-px rounded-[calc(0.75rem-1px)] bg-zinc-800/90"></div>
@@ -77,7 +80,7 @@ export function SecondaryFeatures() {
                                 <rect className="fill-white/2.5 transition duration-500 hover:fill-white/5" stroke-width="0" width="47" height="47" x="49" y="145"></rect>
                                 <rect className="fill-white/2.5 transition duration-500 hover:fill-white/5" stroke-width="0" width="47" height="47" x="145" y="193"></rect>
                             </svg>
-                            <div className="relative flex flex-col w-full">
+                            <div className="relative flex flex-col w-full h-full">
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <div className="font-belgro text-white/80 text-sm">Strategy</div>
@@ -102,9 +105,9 @@ export function SecondaryFeatures() {
                                         <div className="text-sm font-basement text-white">12h 30m</div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-2 mt-3">
-                                    <div className="text-xs text-white/60">24h Performance:</div>
-                                    <div className="text-xs text-green-400 font-medium">↗ +2.1%</div>
+                                
+                                <div className="flex-grow flex flex-col justify-end">
+                                    <ComingSoonInline />
                                 </div>
                             </div>
                         </div>
