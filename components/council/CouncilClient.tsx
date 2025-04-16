@@ -11,6 +11,7 @@ import { useSiteReady } from '@/libs/site-ready-context';
 import { GridPattern } from "@/components/lunar/GridPattern";
 import { SpotlightCard } from "@/components/lunar/SpotlightCard";
 import Sponsors from './sponsors';
+import ComingSoonInline from '@/components/ComingSoonInline';
 
 // Import Spline dynamically to ensure it only loads on the client
 const SplineCanvas = dynamic(() => import('@/components/SplineCanvas'), {
@@ -164,6 +165,7 @@ export default function CouncilClient() {
                 <SpotlightCard
                   size={250}
                   className="relative w-full rounded-xl bg-white/10 p-6"
+                  style={{ minHeight: '450px' }}
                 >
                   <div className="absolute inset-px rounded-[calc(0.75rem-1px)] bg-zinc-800/90"></div>
 
@@ -183,7 +185,7 @@ export default function CouncilClient() {
                     ))}
                   </GridPattern>
 
-                  <div className="relative flex flex-col w-full">
+                  <div className="relative flex flex-col w-full h-full">
                     <div className="flex justify-between items-start mb-4">
                       <div>
                         <div className="font-belgro text-white/80 text-sm">Current Strategy</div>
@@ -208,6 +210,11 @@ export default function CouncilClient() {
                         <div className="text-xs text-white/60 mb-1">Reward Pool</div>
                         <div className="text-sm font-basement text-white">$80,000</div>
                       </div>
+                    </div>
+
+                    {/* Add the inline coming soon component with proper spacing */}
+                    <div className="flex-grow flex flex-col justify-end">
+                      <ComingSoonInline />
                     </div>
                   </div>
                 </SpotlightCard>
