@@ -3,6 +3,8 @@
 import { useDisclosure } from "@nextui-org/react";
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { useReadContract } from "wagmi";
+import { formatUnits } from "viem";
 import useHoverEffect from '@/hooks/useHoverEffect';
 import { staggerContainer, textVariant } from "@/libs/motion";
 import Button from "@/components/lunar/Button";
@@ -12,10 +14,10 @@ import { SpotlightCard } from "@/components/lunar/SpotlightCard";
 import TransactionModal from "@/components/modals";
 import { useSiteReady } from '@/libs/site-ready-context';
 import SplineCanvas from '@/components/SplineCanvas';
+import { CONTRACT_ADDRESS, VAULT_ABI } from "@/constants/index";
 
 const VaultActionCards = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [transactionType, setTransactionType] = useState('deposit');
     const { animationsEnabled } = useSiteReady();
 
     const titleRef = useRef(null);
@@ -25,6 +27,61 @@ const VaultActionCards = () => {
     useHoverEffect(titleRef);
     useHoverEffect(titleRef2);
     useHoverEffect(rezyRef);
+
+    // Get vault data
+    const { data: totalAssets } = useReadContract({
+        address: CONTRACT_ADDRESS,
+        abi: VAULT_ABI,
+        functionName: "totalAssets",
+    });
+
+    const { data: totalSupply } = useReadContract({
+        address: CONTRACT_ADDRESS,
+        abi: VAULT_ABI,
+        functionName: "totalSupply",
+    });
+
+    // Format vault stats
+    const formatTVL = () => {
+        if (!totalAssets) return "0";
+        const formatted = formatUnits(totalAssets, 6);
+        const number = parseFloat(formatted);
+        
+        if (number >= 1000000) {
+            return `$${(number / 1000000).toFixed(1)}M`;
+        } else if (number >= 1000) {
+            return `$${(number / 1000).toFixed(1)}K`;
+        } else {
+            return `$${number.toLocaleString()}`;
+        }
+    };
+
+    const formatShares = () => {
+        if (!totalSupply) return "0";
+        const formatted = formatUnits(totalSupply, 6);
+        const number = parseFloat(formatted);
+        
+        if (number >= 1000000) {
+            return `${(number / 1000000).toFixed(1)}M`;
+        } else if (number >= 1000) {
+            return `${(number / 1000).toFixed(1)}K`;
+        } else {
+            return number.toLocaleString();
+        }
+    };
+
+    // Calculate estimated daily yield (16% APY / 365 days)
+    const getDailyYield = () => {
+        if (!totalAssets) return "$0";
+        const tvl = parseFloat(formatUnits(totalAssets, 6));
+        const dailyYield = (tvl * 0.16) / 365; // 16% APY divided by 365 days
+        
+        if (dailyYield >= 1000) {
+            return `$${(dailyYield / 1000).toFixed(1)}K`;
+        } else {
+            return `$${dailyYield.toFixed(0)}`;
+        }
+    };
 
     const gridBlocks = [
         [2, 5],
@@ -45,8 +102,7 @@ const VaultActionCards = () => {
         setVaultSplineLoaded(true);
     }, []);
 
-    const handleAction = (type) => {
-        setTransactionType(type);
+    const handleAction = () => {
         onOpen();
     };
 
@@ -110,10 +166,10 @@ const VaultActionCards = () => {
                                 </div>
 
                                 <div className="absolute top-1/2 left-[-100px] -translate-y-1/2">
-                                    <Button onClick={() => handleAction('deposit')} text="Deposit" />
+                                    <Button onClick={() => handleAction()} text="Vault" />
                                 </div>
                                 <div className="absolute top-1/2 right-[-100px] -translate-y-1/2">
-                                    <Button onClick={() => handleAction('withdraw')} text="Withdraw" />
+                                    <Button onClick={() => handleAction()} text="Access" />
                                 </div>
                             </div>
                         </motion.div>
@@ -157,16 +213,16 @@ const VaultActionCards = () => {
 
                                     <div className="grid grid-cols-3 gap-4 py-3 border-y border-white/10">
                                         <div>
-                                            <div className="text-xs text-white/60 mb-1">Deposited</div>
-                                            <div className="text-sm font-basement text-white">1,000 USDC</div>
+                                            <div className="text-xs text-white/60 mb-1">Total Deposited</div>
+                                            <div className="text-sm font-basement text-white">{formatTVL()}</div>
                                         </div>
                                         <div>
-                                            <div className="text-xs text-white/60 mb-1">Earned</div>
-                                            <div className="text-sm font-basement text-basement-cyan">+70 USDC</div>
+                                            <div className="text-xs text-white/60 mb-1">Daily Yield</div>
+                                            <div className="text-sm font-basement text-basement-cyan">+{getDailyYield()}</div>
                                         </div>
                                         <div>
-                                            <div className="text-xs text-white/60 mb-1">Next Reward</div>
-                                            <div className="text-sm font-basement text-white">12h 30m</div>
+                                            <div className="text-xs text-white/60 mb-1">Total Shares</div>
+                                            <div className="text-sm font-basement text-white">{formatShares()}</div>
                                         </div>
                                     </div>
 
@@ -184,7 +240,6 @@ const VaultActionCards = () => {
             <TransactionModal
                 isOpen={isOpen}
                 onClose={onClose}
-                type={transactionType}
             />
         </motion.div>
     );

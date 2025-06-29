@@ -6,6 +6,7 @@ import useHoverEffect from '@/hooks/useHoverEffect';
 import { staggerContainer, textVariant } from "@/libs/motion";
 import s from '@/components/home-page/home.module.scss';
 import React from 'react';
+import Link from 'next/link';
 
 const TitlesContainer = React.memo(() => {
     const titleRef = useRef(null);
@@ -85,6 +86,36 @@ const TitlesContainer = React.memo(() => {
                     propose strategies to the AI ronin council. STAKE YOUR HONOR.
                 </motion.div>
             </motion.h1>
+
+            {/* CTA Buttons - Mismo estilo que el resto */}
+            <motion.div
+                variants={textVariant(1.6)}
+                className="flex flex-col sm:flex-row items-center justify-center gap-6 mt-16"
+            >
+                <Link href="/vault">
+                    <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="relative"
+                    >
+                        <div className="px-8 py-4 bg-basement-cyan text-black font-basement font-bold text-lg uppercase tracking-wider hover:bg-cyan-400 transition-colors duration-200">
+                            ⚔️ ENTER THE VAULT
+                        </div>
+                    </motion.div>
+                </Link>
+                
+                <Link href="/council">
+                    <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="relative"
+                    >
+                        <div className="px-8 py-4 border border-white/20 text-white font-basement font-bold text-lg uppercase tracking-wider hover:bg-white/10 transition-colors duration-200">
+                            🏛️ THE COUNCIL
+                        </div>
+                    </motion.div>
+                </Link>
+            </motion.div>
         </motion.div>
     );
 });
