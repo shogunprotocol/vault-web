@@ -12,12 +12,12 @@ export default function Card3() {
     return (
         <motion.div
             variants={textVariant(1.4)}
-            className="flex sm:col-start-4 sm:row-start-2 sm:row-span-1 items-center">
+            className="w-full h-full">
             <SpotlightCard
                 from="#1cd1c6"
                 via="#407cff"
                 size={300}
-                className="relative mx-auto w-full max-w-2xl rounded-[--radius] bg-white/10 p-8 [--radius:theme(borderRadius.2xl)]">
+                className="relative w-full h-full min-h-[280px] rounded-[--radius] bg-white/10 p-8 [--radius:theme(borderRadius.2xl)]">
                 <div className="absolute inset-px rounded-[calc(var(--radius)-1px)] bg-zinc-800/90"></div>
 
                 <GridPattern

@@ -1,11 +1,42 @@
-import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Button as NextUIButton, Tooltip } from "@nextui-org/react";
+import { Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Button as NextUIButton, Tooltip, Tabs, Tab } from "@nextui-org/react";
 import { useState, useEffect, useRef } from "react";
 import Button from "../lunar/Button";
 import { useAccount, useWriteContract, usePublicClient, useReadContract } from "wagmi";
-import { erc20Abi, parseUnits, formatUnits } from "viem";
+import { parseUnits, formatUnits } from "viem";
 import { useToast } from "../../hooks/use-toast";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { CONTRACT_ADDRESS, USDC_ADDRESS, VAULT_ABI } from "../../constants";
+import { CONTRACT_ADDRESS, USDC_ADDRESS, WBTW_ADDRESS, WETH_ADDRESS, VAULT_ABI, TESTNET_TOKEN_ABI } from "../../constants";
+
+const TOKENS = {
+  USDC: {
+    address: USDC_ADDRESS,
+    name: 'USDC',
+    symbol: 'USDC',
+    decimals: 6,
+    icon: '💵',
+  },
+  WBTW: {
+    address: WBTW_ADDRESS,
+    name: 'Wrapped BTW',
+    symbol: 'WBTW',
+    decimals: 8,
+    icon: '₿',
+  },
+  WETH: {
+    address: WETH_ADDRESS,
+    name: 'Wrapped ETH',
+    symbol: 'WETH',
+    decimals: 18,
+    icon: '⟠',
+  },
+};
+
+// Mint limits for testnet faucets
+const MINT_LIMITS = {
+  USDC: { amount: 10000, symbol: 'USDC' }, // 10,000 USDC max per faucet
+  WBTW: { amount: 1, symbol: 'WBTC' }, // 1 WBTC max per faucet  
+  WETH: { amount: 10, symbol: 'WETH' }, // 10 WETH max per faucet
+};
 
 const strategies = [
   {
@@ -34,18 +65,30 @@ const strategies = [
   },
 ];
 
-const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
+const TransactionModal = ({ isOpen, onClose, shouldOpenToMint = false }) => {
     const { address: userAddress } = useAccount();
     const { writeContractAsync } = useWriteContract();
     const publicClient = usePublicClient();
     const [amount, setAmount] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [showStrategies, setShowStrategies] = useState(false);
+    const [activeTab, setActiveTab] = useState('deposit');
+    const [selectedToken, setSelectedToken] = useState('USDC');
+    const [selectedMintToken, setSelectedMintToken] = useState('USDC');
     const { toast } = useToast();
 
     // Add both success and error sound refs
     const successAudioRef = useRef(new Audio('/audio/samurai-sword.mp3'));
     const errorAudioRef = useRef(new Audio('/audio/error.mp3'));
+
+    // Play sword sound function
+    const playSwordSound = () => {
+        try {
+            successAudioRef.current.volume = 0.5;
+            successAudioRef.current.play().catch(console.error);
+        } catch (error) {
+            console.error('Error playing sword sound:', error);
+        }
+    };
 
     // Contract read hooks for balances
     const { data: userBalance, refetch: refetchUserBalance } = useReadContract({
@@ -61,6 +104,46 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
         functionName: "totalAssets",
     });
 
+    // Token balance hooks
+    const { data: usdcBalance } = useReadContract({
+        address: USDC_ADDRESS,
+        abi: TESTNET_TOKEN_ABI,
+        functionName: "balanceOf",
+        args: [userAddress],
+    });
+
+    const { data: wbtwBalance } = useReadContract({
+        address: WBTW_ADDRESS,
+        abi: TESTNET_TOKEN_ABI,
+        functionName: "balanceOf",
+        args: [userAddress],
+    });
+
+    const { data: wethBalance } = useReadContract({
+        address: WETH_ADDRESS,
+        abi: TESTNET_TOKEN_ABI,
+        functionName: "balanceOf",
+        args: [userAddress],
+    });
+
+    // Get available balance for selected token
+    const getAvailableBalance = () => {
+        const balances = {
+            USDC: usdcBalance,
+            WBTW: wbtwBalance,
+            WETH: wethBalance,
+        };
+        
+        // Use different token based on active tab
+        const tokenKey = activeTab === 'mint' ? selectedMintToken : selectedToken;
+        const balance = balances[tokenKey];
+        const tokenConfig = TOKENS[tokenKey];
+        
+        if (!balance || !tokenConfig) return "0";
+        
+        return formatUnits(balance, tokenConfig.decimals);
+    };
+
     const handleAmountChange = (e) => {
         setAmount(e.target.value);
     };
@@ -70,14 +153,15 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
 
         try {
             setIsLoading(true);
-            const parsedAmount = parseUnits(amount, 6);
+            const selectedTokenConfig = TOKENS[selectedToken];
+            const parsedAmount = parseUnits(amount, selectedTokenConfig.decimals);
 
-            if (type === 'deposit') {
+            if (activeTab === 'deposit') {
                 try {
-                    // First approve USDC spending
+                    // First approve token spending
                     const approveTxHash = await writeContractAsync({
-                        address: USDC_ADDRESS,
-                        abi: erc20Abi,
+                        address: selectedTokenConfig.address,
+                        abi: TESTNET_TOKEN_ABI,
                         functionName: "approve",
                         args: [CONTRACT_ADDRESS, parsedAmount],
                     });
@@ -99,19 +183,24 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                 }
 
                 try {
+                    // Use depositToken function for multi-token support
                     const txHash = await writeContractAsync({
                         address: CONTRACT_ADDRESS,
                         abi: VAULT_ABI,
-                        functionName: "deposit",
-                        args: [parsedAmount],
+                        functionName: "depositToken",
+                        args: [
+                            selectedTokenConfig.address,
+                            parsedAmount,
+                            userAddress,
+                        ],
                     });
                     
                     await publicClient?.waitForTransactionReceipt({ hash: txHash });
-                    successAudioRef.current.play();
+                    playSwordSound();
 
                     toast({
                         title: "⚔️ Deposit Successful",
-                        description: `${amount} USDC successfully powered up`,
+                        description: `${amount} ${selectedTokenConfig.symbol} successfully powered up`,
                         variant: "success",
                     });
                 } catch (error) {
@@ -128,19 +217,21 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                 }
             } else {
                 try {
+                    // Withdraw in shares (using 6 decimals like USDC for shares)
+                    const shareAmount = parseUnits(amount, 6);
                     const txHash = await writeContractAsync({
                         address: CONTRACT_ADDRESS,
                         abi: VAULT_ABI,
                         functionName: "withdraw",
-                        args: [parsedAmount],
+                        args: [shareAmount, userAddress, userAddress],
                     });
                     
                     await publicClient?.waitForTransactionReceipt({ hash: txHash });
-                    successAudioRef.current.play();
+                    playSwordSound();
 
                     toast({
                         title: "⚔️ Withdrawal Successful",
-                        description: `${amount} USDC successfully withdrawn`,
+                        description: `${amount} shares successfully withdrawn`,
                         variant: "success",
                     });
                 } catch (error) {
@@ -180,17 +271,73 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
         }
     };
 
-    // Add an effect to refresh balances when modal opens
+    const handleMint = async () => {
+        if (isLoading) return;
+
+        try {
+            setIsLoading(true);
+            const selectedTokenConfig = TOKENS[selectedMintToken];
+            const mintLimit = MINT_LIMITS[selectedMintToken];
+            const mintAmount = parseUnits(mintLimit.amount.toString(), selectedTokenConfig.decimals);
+
+            const txHash = await writeContractAsync({
+                address: selectedTokenConfig.address,
+                abi: TESTNET_TOKEN_ABI,
+                functionName: "faucet",
+                args: [mintAmount],
+            });
+            
+            await publicClient?.waitForTransactionReceipt({ hash: txHash });
+            playSwordSound();
+
+            toast({
+                title: "🚰 Mint Successful",
+                description: `${mintLimit.amount} ${mintLimit.symbol} successfully minted to your wallet`,
+                variant: "success",
+            });
+
+        } catch (error) {
+            console.error(error);
+            if (error.message.includes('User rejected') || error.message.includes('User denied')) {
+                errorAudioRef.current.play();
+                toast({
+                    title: "Transaction Cancelled",
+                    description: "You rejected the mint request",
+                    variant: "warning",
+                });
+            } else {
+                toast({
+                    title: "Mint Failed",
+                    description: error.message || "Minting failed. You may have reached the daily limit.",
+                    variant: "destructive",
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
         if (isOpen) {
             Promise.all([
                 refetchUserBalance(),
                 refetchTotalAssets()
             ]);
+            
+            // Set mint tab if opened from header
+            if (shouldOpenToMint) {
+                setActiveTab('mint');
+            }
         }
-    }, [isOpen, refetchUserBalance, refetchTotalAssets]);
+    }, [isOpen, shouldOpenToMint, refetchUserBalance, refetchTotalAssets]);
 
-    // Cleanup audio on unmount
+    useEffect(() => {
+        if (!isOpen) {
+            setActiveTab('deposit');
+            setAmount("");
+        }
+    }, [isOpen]);
+
     useEffect(() => {
         return () => {
             successAudioRef.current.pause();
@@ -277,7 +424,7 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
         <Modal
             backdrop="opaque"
             isOpen={isOpen}
-            size="2xl"
+            size="3xl"
             motionProps={{
                 variants: {
                     enter: {
@@ -293,10 +440,12 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                 }
             }}
             classNames={{
-                backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/25 backdrop-opacity-20"
+                backdrop: "bg-gradient-to-t from-zinc-900 to-zinc-900/25 backdrop-opacity-20",
+                wrapper: "flex items-center justify-center p-4",
+                base: "w-full max-w-4xl h-auto min-h-[700px] max-h-[95vh] overflow-y-auto"
             }}
         >
-            <ModalContent className="bg-black-tr">
+            <ModalContent className="bg-black-tr min-h-[700px] max-h-[95vh] flex flex-col overflow-hidden" style={{ backgroundColor: 'rgba(0, 0, 0, 0.95)', border: '1px solid rgba(0, 255, 247, 0.3)' }}>
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 flex items-center text-white uppercase hover:text-basement-cyan font-basement z-50 transition-colors duration-200"
@@ -305,20 +454,51 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                 </button>
                 
                 <ModalHeader className="flex flex-col gap-1">
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-3 mb-4">
                         <div className="p-2 rounded-lg bg-basement-cyan/10 text-2xl">
-                            {type === 'deposit' ? '⚡' : '💎'}
+                            ⚔️
                         </div>
                         <div>
                             <h2 className="font-basement text-basement-cyan text-xl">
-                                {type === 'deposit' ? 'Power Up Your Assets' : 'Strategic Withdraw'}
+                                Samurai Vault
                             </h2>
                             <p className="text-sm text-gray-400">
-                                {type === 'deposit' 
-                                    ? 'Your funds will be optimally distributed by our AI' 
-                                    : 'Withdraw your optimized assets'}
+                                Multi-token AI-powered yield optimization
                             </p>
                         </div>
+                    </div>
+
+                    {/* Tabs */}
+                    <div className="w-full mb-4">
+                        <Tabs 
+                            selectedKey={activeTab} 
+                            onSelectionChange={setActiveTab}
+                            classNames={{
+                                tabList: "gap-2 w-full relative rounded-lg bg-white/5 p-1",
+                                cursor: "w-full bg-basement-cyan/20 border border-basement-cyan/50",
+                                tab: "max-w-fit px-4 h-10 font-basement",
+                                tabContent: "group-data-[selected=true]:text-basement-cyan"
+                            }}
+                        >
+                            <Tab key="deposit" title={
+                                <div className="flex items-center gap-2">
+                                    <span>⚡</span>
+                                    <span>Deposit</span>
+                                </div>
+                            } />
+                            <Tab key="withdraw" title={
+                                <div className="flex items-center gap-2">
+                                    <span>💎</span>
+                                    <span>Withdraw</span>
+                                </div>
+                            } />
+                            <Tab key="mint" title={
+                                <div className="flex items-center gap-2">
+                                    <span>🚰</span>
+                                    <span>Mint</span>
+                                </div>
+                            } />
+                        </Tabs>
                     </div>
                     
                     <div className="grid grid-cols-2 gap-4 mt-4">
@@ -352,102 +532,172 @@ const TransactionModal = ({ isOpen, onClose, type = 'deposit' }) => {
                     </div>
                 </ModalHeader>
 
-                <ModalBody className="font-aeonik text-white">
-                    <div className="relative">
-                        <Input
-                            autoFocus
-                            type="number"
-                            label={`${type === 'deposit' ? 'Deposit' : 'Withdraw'} Amount`}
-                            placeholder="Enter amount in USDC"
-                            variant="bordered"
-                            value={amount}
-                            onChange={handleAmountChange}
-                            classNames={{
-                                label: "text-xs font-basement text-basement-cyan pb-8",
-                                input: "bg-white/5",
-                                inputWrapper: "border-white/10 hover:border-basement-cyan/50 transition-colors duration-200",
-                            }}
-                        />
-                        {type === 'deposit' && (
-                            <div className="absolute right-0 -bottom-6 text-xs text-gray-500">
-                                Available: {/* Add user USDC balance here */} USDC
-                            </div>
-                        )}
-                    </div>
-
-                    <NextUIButton
-                        className="w-full mt-8 bg-white/5 hover:bg-white/10 text-basement-cyan font-basement group transition-all duration-200"
-                        onClick={() => setShowStrategies(!showStrategies)}
-                    >
-                        <span className="flex items-center gap-2">
-                            <span className={`transform transition-transform duration-200 ${showStrategies ? 'rotate-180' : ''}`}>
-                                ▼
-                            </span>
-                            AI Strategy Overview
-                            <span className="text-xs text-gray-500 ml-2 group-hover:text-basement-cyan">
-                                {showStrategies ? 'Hide Details' : 'View Details'}
-                            </span>
-                        </span>
-                    </NextUIButton>
-
-                    {showStrategies && (
-                        <div className="mt-4 space-y-3">
-                            <div className="grid grid-cols-1 gap-3">
-                                {strategies.map((strategy) => (
-                                    <div
-                                        key={strategy.name}
-                                        className="p-3 rounded-xl bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/10 transition-all duration-200 hover:border-basement-cyan/20"
+                <ModalBody className="font-aeonik text-white flex-1 p-6" style={{ minHeight: '400px', maxHeight: '500px', overflowY: 'auto' }}>
+                    {/* Token Selector - Show for deposits and minting */}
+                    {activeTab === 'deposit' ? (
+                        <div className="space-y-2 mb-6">
+                            <label className="text-sm font-basement text-basement-cyan">
+                                Select Token
+                            </label>
+                            <div className="grid grid-cols-3 gap-2">
+                                {Object.entries(TOKENS).map(([key, token]) => (
+                                    <button
+                                        key={key}
+                                        onClick={() => setSelectedToken(key)}
+                                        className={`p-3 rounded-lg border transition-all duration-200 ${
+                                            selectedToken === key
+                                                ? 'bg-gradient-to-r from-basement-cyan/20 to-basement-cyan/10 text-basement-cyan border-basement-cyan/50'
+                                                : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-basement-cyan/20'
+                                        }`}
                                     >
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <div className="p-2 rounded-lg bg-white/5 text-xl shrink-0">
-                                                <span>{strategy.icon}</span>
-                                            </div>
-                                            <div>
-                                                <h3 className="font-basement text-basement-cyan flex items-center gap-2">
-                                                    {strategy.name}
-                                                    <span className="text-xs px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400">
-                                                        {strategy.status}
-                                                    </span>
-                                                </h3>
-                                                <p className="text-xs text-gray-500">{strategy.protocol}</p>
-                                            </div>
-                                        </div>
-                                        <p className="text-xs text-gray-400">{strategy.description}</p>
-                                        <p className="text-xs text-gray-500 mt-2 pt-2 border-t border-white/10">
-                                            {strategy.details}
-                                        </p>
-                                    </div>
+                                        <div className="text-2xl mb-1">{token.icon}</div>
+                                        <div className="text-sm font-basement">{token.symbol}</div>
+                                    </button>
                                 ))}
                             </div>
-                            
-                            <div className="p-3 rounded-lg bg-gradient-to-r from-basement-cyan/5 to-transparent border border-basement-cyan/20">
-                                <div className="flex items-start gap-3">
-                                    <div className="p-2 rounded-lg bg-basement-cyan/10 text-lg shrink-0">🤖</div>
-                                    <div>
-                                        <p className="text-xs text-gray-400 mb-1">
-                                            <span className="text-basement-cyan font-bold">AI Security Guarantee:</span>{' '}
-                                            Your assets never leave our secure smart contracts.
-                                        </p>
-                                        <p className="text-xs text-gray-500">
-                                            The AI only optimizes allocation between vetted strategies while maintaining full asset security.
-                                        </p>
+                        </div>
+                    ) : activeTab === 'mint' ? (
+                        <div className="space-y-2 mb-6">
+                            <label className="text-sm font-basement text-basement-cyan">
+                                Select Token to Mint
+                            </label>
+                            <div className="grid grid-cols-3 gap-2">
+                                {Object.entries(TOKENS).map(([key, token]) => {
+                                    const mintLimit = MINT_LIMITS[key];
+                                    return (
+                                        <button
+                                            key={key}
+                                            onClick={() => setSelectedMintToken(key)}
+                                            className={`p-3 rounded-lg border transition-all duration-200 ${
+                                                selectedMintToken === key
+                                                    ? 'bg-gradient-to-r from-basement-cyan/20 to-basement-cyan/10 text-basement-cyan border-basement-cyan/50'
+                                                    : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-basement-cyan/20'
+                                            }`}
+                                        >
+                                            <div className="text-2xl mb-1">{token.icon}</div>
+                                            <div className="text-sm font-basement">{token.symbol}</div>
+                                            <div className="text-xs text-gray-400 mt-1">
+                                                {mintLimit.amount} max
+                                            </div>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : (
+                        /* Spacer for withdraw tab to maintain same height */
+                        <div className="space-y-2 mb-6">
+                            <div className="text-sm font-basement text-basement-cyan opacity-50">
+                                Withdraw Mode
+                            </div>
+                            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                                <div className="text-center">
+                                    <div className="text-2xl mb-2">💎</div>
+                                    <div className="text-sm font-basement text-white/70">
+                                        Withdraw your vault shares for USDC
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
+
+                    {activeTab === 'mint' ? (
+                        /* Mint mode - show mint info instead of input */
+                        <div className="relative space-y-6">
+                            <div className="p-6 rounded-xl bg-gradient-to-r from-orange-500/20 to-yellow-500/20 border border-orange-400/40">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="p-3 rounded-xl bg-orange-500/20 text-3xl">
+                                        🚰
+                                    </div>
+                                    <div className="flex-1">
+                                        <h3 className="text-xl font-bold text-orange-300 mb-2">
+                                            Testnet Token Faucet
+                                        </h3>
+                                        <p className="text-base text-gray-300">
+                                            Get free {TOKENS[selectedMintToken]?.symbol} tokens for testing the vault
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-4 rounded-lg bg-white/10 border border-white/20">
+                                        <div className="text-sm text-gray-400 mb-1">Amount to mint:</div>
+                                        <div className="text-xl font-bold text-orange-300">
+                                            {MINT_LIMITS[selectedMintToken]?.amount} {TOKENS[selectedMintToken]?.symbol}
+                                        </div>
+                                    </div>
+                                    <div className="p-4 rounded-lg bg-white/10 border border-white/20">
+                                        <div className="text-sm text-gray-400 mb-1">Current balance:</div>
+                                        <div className="text-xl font-bold text-basement-cyan">
+                                            {getAvailableBalance()} {TOKENS[selectedMintToken]?.symbol}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-400/20">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-green-400 text-lg">✅</span>
+                                        <span className="text-green-300 font-medium">
+                                            Free testnet tokens • No gas fees • Instant minting
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="relative">
+                            <Input
+                                autoFocus
+                                type="number"
+                                label={activeTab === 'deposit' ? `Deposit Amount (${TOKENS[selectedToken]?.symbol || 'Token'})` : 'Withdraw Amount (Shares)'}
+                                placeholder={activeTab === 'deposit' ? `Enter amount in ${TOKENS[selectedToken]?.symbol || 'tokens'}` : 'Enter shares to withdraw'}
+                                variant="bordered"
+                                value={amount}
+                                onChange={handleAmountChange}
+                                classNames={{
+                                    label: "text-xs font-basement text-basement-cyan pb-8",
+                                    input: "bg-white/5",
+                                    inputWrapper: "border-white/10 hover:border-basement-cyan/50 transition-colors duration-200",
+                                }}
+                            />
+                            {activeTab === 'deposit' && (
+                                <div className="absolute right-0 -bottom-6 text-xs text-gray-500">
+                                    Available: {getAvailableBalance()} {TOKENS[selectedToken]?.symbol || 'Token'}
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Spacer to maintain consistent modal height */}
+                    <div className="mt-8 p-4 rounded-lg bg-gradient-to-r from-basement-cyan/5 to-transparent border border-basement-cyan/20">
+                        <div className="flex items-start gap-3">
+                            <div className="p-2 rounded-lg bg-basement-cyan/10 text-lg shrink-0">🤖</div>
+                            <div>
+                                <p className="text-xs text-gray-400 mb-1">
+                                    <span className="text-basement-cyan font-bold">AI Powered:</span>{' '}
+                                    Your assets are automatically optimized across multiple DeFi strategies.
+                                </p>
+                                <p className="text-xs text-gray-500">
+                                    Multi-token deposits • Automated rebalancing • Maximum yields
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </ModalBody>
 
-                <ModalFooter>
-                    <Button
-                        text={
-                            isLoading
-                                ? `${type === 'deposit' ? '⚡ Powering Up...' : '💎 Withdrawing...'}`
-                                : `${type === 'deposit' ? '⚡ Deposit' : '💎 Strategic Withdraw'}`
-                        }
-                        onClick={handleSubmit}
-                        disabled={!amount || isLoading}
-                    />
+                <ModalFooter className="p-6 border-t border-basement-cyan/20">
+                    <div className="w-full">
+                        <Button
+                            text={
+                                isLoading
+                                    ? `${activeTab === 'deposit' ? '⚡ Powering Up...' : activeTab === 'withdraw' ? '💎 Withdrawing...' : '🚰 Minting...'}`
+                                    : `${activeTab === 'deposit' ? `⚡ Deposit ${TOKENS[selectedToken]?.symbol || 'Token'}` : activeTab === 'withdraw' ? '💎 Strategic Withdraw' : `🚰 Mint ${MINT_LIMITS[selectedMintToken]?.amount} ${TOKENS[selectedMintToken]?.symbol}`}`
+                            }
+                            onClick={activeTab === 'mint' ? handleMint : handleSubmit}
+                            disabled={activeTab === 'mint' ? isLoading : (!amount || isLoading)}
+                            style={{ width: '100%', fontSize: '16px', padding: '16px 24px', minHeight: '56px' }}
+                        />
+                    </div>
                 </ModalFooter>
             </ModalContent>
         </Modal>
