@@ -9,7 +9,7 @@ const slides = [
   {
     id: 1,
     type: 'hero',
-    title: 'Shogun with AI rebalances, vault secures.',
+    title: 'Shōgun',
     subtitle: 'AI-Powered DeFi Yield Optimization',
     logo: '/images/logo/shogun_logo.png'
   },
@@ -18,7 +18,7 @@ const slides = [
     type: 'problem-intro',
     title: 'Drowning in protocols?',
     subtitle: 'We get it.',
-    image: '/images/placeholder-video.png'
+    image: '/images/img01.png'
   },
   {
     id: 3,
@@ -52,12 +52,6 @@ const slides = [
     //   'Agent can only execute whitelisted strategies',
     //   'Curated smart contracts only'
     // ]
-  },
-  {
-    id: 6,
-    type: 'business-model',
-    title: 'Business Model',
-    content: 'Coming soon...'
   },
   {
     id: 7,
@@ -117,8 +111,8 @@ const Presentation = () => {
           <div className={s.heroSlide}>
             <div className={s.heroContent}>
               <div className={s.heroText}>
-                <h1 className={s.heroTitle}>{slide.title}</h1>
-                <p className={s.heroSubtitle}>{slide.subtitle}</p>
+                <h1 className={`font-basement ${s.heroTitle}`}>{slide.title}</h1>
+                <p className={`font-aeonik ${s.heroSubtitle}`}>{slide.subtitle}</p>
               </div>
               <div className={s.heroLogo}>
                 <Image 
@@ -138,17 +132,30 @@ const Presentation = () => {
           <div className={s.problemIntroSlide}>
             <div className={s.problemIntroContent}>
               <div className={s.problemIntroText}>
-                <h1 className={s.problemIntroTitle}>{slide.title}</h1>
-                <p className={s.problemIntroSubtitle}>{slide.subtitle}</p>
+                <h1 className={`font-basement ${s.problemIntroTitle}`}>{slide.title}</h1>
+                <p className={`font-aeonik ${s.problemIntroSubtitle}`}>{slide.subtitle}</p>
               </div>
               <div className={s.problemIntroImage}>
-                <Image 
-                  src={slide.image || ''} 
-                  alt="Protocols" 
-                  width={500} 
-                  height={400}
-                  className={s.introImage}
-                />
+                <div className={s.protocolLogos}>
+                  <div className={s.protocolLogo}>AAVE</div>
+                  <div className={s.protocolLogo}>MORPHO</div>
+                  <div className={s.protocolLogo}>TRADER JOE</div>
+                  <div className={s.protocolLogo}>COMPOUND</div>
+                  <div className={s.protocolLogo}>MAKER</div>
+                  <div className={s.protocolLogo}>UNISWAP</div>
+                  <div className={s.protocolLogo}>CURVE</div>
+                  <div className={s.protocolLogo}>BALANCER</div>
+                  <div className={s.protocolLogo}>SUSHI</div>
+                  <div className={s.protocolLogo}>YIELD</div>
+                  <div className={s.protocolLogo}>SPARK</div>
+                  <div className={s.protocolLogo}>FRAX</div>
+                  <div className={s.protocolLogo}>LIDO</div>
+                  <div className={s.protocolLogo}>RADIO</div>
+                  <div className={s.protocolLogo}>PENDLE</div>
+                  <div className={s.protocolLogo}>CONVEX</div>
+                  <div className={s.protocolLogo}>YFI</div>
+                  <div className={s.protocolLogo}>SNAPSHOT</div>
+                </div>
               </div>
             </div>
           </div>
@@ -157,7 +164,7 @@ const Presentation = () => {
       case 'problems':
         return (
           <div className={s.problemsSlide}>
-            <h1 className={s.slideTitle}>{slide.title}</h1>
+            <h1 className={`font-basement ${s.slideTitle}`}>{slide.title}</h1>
             <div className={s.problemsList}>
               {slide.items?.map((item, index) => (
                 <motion.div
@@ -167,8 +174,8 @@ const Presentation = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.2 }}
                 >
-                  <span className={s.problemNumber}>{index + 1}</span>
-                  <span className={s.problemText}>{item}</span>
+                  <span className={`font-basement ${s.problemNumber}`}>{index + 1}</span>
+                  <span className={`font-aeonik ${s.problemText}`}>{item}</span>
                 </motion.div>
               ))}
             </div>
@@ -178,7 +185,7 @@ const Presentation = () => {
       case 'solution':
         return (
           <div className={s.solutionSlide}>
-            <h1 className={s.slideTitle}>{slide.title}</h1>
+            <h1 className={`font-basement ${s.slideTitle}`}>{slide.title}</h1>
             <div className={s.solutionList}>
               {slide.items?.map((item, index) => (
                 <motion.div
@@ -189,7 +196,7 @@ const Presentation = () => {
                   transition={{ delay: index * 0.3 }}
                 >
                   <div className={s.solutionIcon}>⚔️</div>
-                  <p className={s.solutionText}>{item}</p>
+                  <p className={`font-aeonik ${s.solutionText}`}>{item}</p>
                 </motion.div>
               ))}
             </div>
@@ -199,17 +206,17 @@ const Presentation = () => {
       case 'security-architecture':
         return (
           <div className={s.securityArchitectureSlide}>
-            <h1 className={s.slideTitle}>{slide.title}</h1>
-            <p className={s.securityArchitectureSubtitle}>{slide.subtitle}</p>
+            <h1 className={`font-basement ${s.slideTitle}`}>{slide.title}</h1>
+            <p className={`font-aeonik ${s.securityArchitectureSubtitle}`}>{slide.subtitle}</p>
             
             <div className={s.securityArchitectureDiagram}>
               {/* Top Row: User and Vault */}
               <div className={s.diagramRow}>
                 <div className={s.diagramSection}>
-                  <div className={s.diagramLabel}>👤 User</div>
+                  <div className={`font-basement ${s.diagramLabel}`}>👤 User</div>
                   <div className={s.diagramBox}>
                     <div className={s.diagramIcon}>💰</div>
-                    <div className={s.diagramText}>Deposits Funds</div>
+                    <div className={`font-aeonik ${s.diagramText}`}>Deposits Funds</div>
                   </div>
                 </div>
 
@@ -225,33 +232,33 @@ const Presentation = () => {
                 </div>
 
                 <div className={s.diagramSection}>
-                  <div className={s.diagramLabel}>🔒 Secure Vault</div>
+                  <div className={`font-basement ${s.diagramLabel}`}>🔒 Secure Vault</div>
                   <div className={s.diagramBox}>
                     <div className={s.diagramIcon}>🏦</div>
-                    <div className={s.diagramText}>Funds Stored Here</div>
-                    <div className={s.diagramSubtext}>Never leaves this vault</div>
+                    <div className={`font-aeonik ${s.diagramText}`}>Funds Stored Here</div>
+                    <div className={`font-aeonik ${s.diagramSubtext}`}>Never leaves this vault</div>
                   </div>
                 </div>
               </div>
 
               {/* Middle: Security Barrier */}
               <div className={s.securityBarrier}>
-                <div className={s.barrierLabel}>🛡️ Security Layer</div>
+                <div className={`font-basement ${s.barrierLabel}`}>🛡️ Security Layer</div>
                 <div className={s.barrierContent}>
-                  <div className={s.barrierItem}>• Whitelisted Strategies Only</div>
-                  <div className={s.barrierItem}>• Curated Smart Contracts</div>
-                  <div className={s.barrierItem}>• Pre-approved Addresses</div>
+                  <div className={`font-aeonik ${s.barrierItem}`}>• Whitelisted Strategies Only</div>
+                  <div className={`font-aeonik ${s.barrierItem}`}>• Curated Smart Contracts</div>
+                  <div className={`font-aeonik ${s.barrierItem}`}>• Pre-approved Addresses</div>
                 </div>
               </div>
 
               {/* Bottom Row: AI Agent and DeFi */}
               <div className={s.diagramRow}>
                 <div className={s.diagramSection}>
-                  <div className={s.diagramLabel}>🤖 AI Agent</div>
+                  <div className={`font-basement ${s.diagramLabel}`}>🤖 AI Agent</div>
                   <div className={s.diagramBox}>
                     <div className={s.diagramIcon}>⚔️</div>
-                    <div className={s.diagramText}>Strategy Execution</div>
-                    <div className={s.diagramSubtext}>No direct fund access</div>
+                    <div className={`font-aeonik ${s.diagramText}`}>Strategy Execution</div>
+                    <div className={`font-aeonik ${s.diagramSubtext}`}>No direct fund access</div>
                   </div>
                 </div>
 
@@ -267,29 +274,14 @@ const Presentation = () => {
                 </div>
 
                 <div className={s.diagramSection}>
-                  <div className={s.diagramLabel}>🌊 DeFi Protocols</div>
+                  <div className={`font-basement ${s.diagramLabel}`}>🌊 DeFi Protocols</div>
                   <div className={s.diagramBox}>
                     <div className={s.diagramIcon}>📊</div>
-                    <div className={s.diagramText}>Yield Opportunities</div>
-                    <div className={s.diagramSubtext}>Whitelisted only</div>
+                    <div className={`font-aeonik ${s.diagramText}`}>Yield Opportunities</div>
+                    <div className={`font-aeonik ${s.diagramSubtext}`}>Whitelisted only</div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className={s.securityArchitectureFeatures}>
-              {slide.features?.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  className={s.securityArchitectureFeature}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                >
-                  <span className={s.securityArchitectureFeatureBullet}>•</span>
-                  <span className={s.securityArchitectureFeatureText}>{feature}</span>
-                </motion.div>
-              ))}
             </div>
           </div>
         );
@@ -297,9 +289,9 @@ const Presentation = () => {
       case 'business-model':
         return (
           <div className={s.businessModelSlide}>
-            <h1 className={s.slideTitle}>{slide.title}</h1>
+            <h1 className={`font-basement ${s.slideTitle}`}>{slide.title}</h1>
             <div className={s.businessModelContent}>
-              <p className={s.businessModelText}>{slide.content}</p>
+              <p className={`font-aeonik ${s.businessModelText}`}>{slide.content}</p>
             </div>
           </div>
         );
@@ -307,7 +299,7 @@ const Presentation = () => {
       case 'demo':
         return (
           <div className={s.demoSlide}>
-            <h1 className={s.slideTitle}>{slide.title}</h1>
+            <h1 className={`font-basement ${s.slideTitle}`}>{slide.title}</h1>
             <div className={s.demoVideo}>
               <video 
                 autoPlay 

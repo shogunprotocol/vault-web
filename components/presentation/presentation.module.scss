@@ -131,6 +131,94 @@
   align-items: center;
 }
 
+.protocolLogos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  animation: float 6s ease-in-out infinite;
+}
+
+.protocolLogo {
+  background: rgba(255, 107, 107, 0.1);
+  border: 2px solid rgba(255, 107, 107, 0.3);
+  border-radius: 10px;
+  padding: 1rem 0.8rem;
+  text-align: center;
+  font-family: 'Basement Grotesque', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #ff6b6b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.2), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    background: rgba(255, 107, 107, 0.2);
+    border-color: rgba(255, 107, 107, 0.5);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0px 0px 20px rgba(255, 107, 107, 0.3);
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:nth-child(odd) {
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  &:nth-child(even) {
+    animation: pulse 4s ease-in-out infinite 2s;
+  }
+
+  &:nth-child(3n) {
+    transform: rotate(-1deg);
+  }
+
+  &:nth-child(3n+1) {
+    transform: rotate(1deg);
+  }
+
+  &:nth-child(3n+2) {
+    transform: rotate(0.5deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .introImage {
   max-width: 500px;
   height: auto;
@@ -616,6 +704,17 @@
     max-width: 90%;
   }
 
+  .protocolLogos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    max-width: 400px;
+  }
+
+  .protocolLogo {
+    padding: 0.8rem 0.6rem;
+    font-size: 0.7rem;
+  }
+
   .securityArchitectureSubtitle {
     font-size: 1.4rem;
   }
@@ -683,6 +782,17 @@
     min-width: 50px;
     height: 50px;
     font-size: 1.5rem;
+  }
+
+  .protocolLogos {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    max-width: 300px;
+  }
+
+  .protocolLogo {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.6rem;
   }
 
   .securityArchitectureSubtitle {
