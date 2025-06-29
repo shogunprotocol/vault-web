@@ -1,5 +1,3 @@
-![Shōgun DeFAI Super Vaults](header.gif)
-
 # ⚔️ Shōgun: AI-Powered DeFi Super Vaults
 
 > **Advanced DeFi vault system with AI-driven strategy execution and multi-chain yield optimization**
@@ -201,14 +199,14 @@ This project integrates Chainlink in multiple ways to enable state changes on th
 - **[components/sections/features.jsx](components/sections/features.jsx)** - Shows real-time vault performance using Chainlink data
 
 ### AI Strategy Manager (External Repository)
-- **[strategies-ai-avalanche](https://github.com/lausuarez02/strategies-ai-avalanche/)** - Contains Chainlink Functions integration:
+- **[shogun-ai-core](https://github.com/lausuarez02/shogun-ai-core)** - Contains Chainlink Functions integration:
   - Strategy risk scoring with verifiable offchain computation
   - Cross-chain APY aggregation using Chainlink Functions
   - Vault allocation optimization with cryptographic verification
   - Oracle health monitoring across networks
 
 ### Smart Contracts (External Repository)
-- **[strategies-contracts-avalanche](https://github.com/lausuarez02/strategies-contracts-avalanche/)** - Contains the MultiTokenVault.sol contract with:
+- **[strategies-ai-vaults](https://github.com/tomi204/ai-vaults/)** - Contains the MultiTokenVault.sol contract with:
   - Chainlink oracle integration for real-time price feeds
   - Multi-token support (USDC, WBTC, WETH, LINK) with oracle pricing
   - Staleness protection and data validation
