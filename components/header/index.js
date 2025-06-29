@@ -48,24 +48,24 @@ export const Header = forwardRef((_, ref) => {
                 alignItems: 'center',
                 gap: '8px',
                 padding: '12px 20px',
-                backgroundColor: '#fb923c',
-                border: '2px solid #f97316',
+                backgroundColor: 'rgb(0 255 247 / var(--tw-bg-opacity, 1))',
+                border: '2px solid white',
                 borderRadius: '12px',
-                color: 'white',
+                color: 'black',
                 fontWeight: 'bold',
                 fontSize: '14px',
-                boxShadow: '0 4px 12px rgba(251, 146, 60, 0.4)',
+                boxShadow: '0 4px 12px rgb(0 255 247 / var(--tw-bg-opacity, 1))',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
                 zIndex: 9999
               }}
               onMouseEnter={(e) => {
                 e.target.style.transform = 'scale(1.05)';
-                e.target.style.backgroundColor = '#f97316';
+                e.target.style.backgroundColor = 'rgb(0 255 247 / var(--tw-bg-opacity, 1))';
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'scale(1)';
-                e.target.style.backgroundColor = '#fb923c';
+                e.target.style.backgroundColor = 'rgb(0 255 247 / var(--tw-bg-opacity, 1))';
               }}
             >
               <span style={{ fontSize: '20px' }}>🚰</span>
