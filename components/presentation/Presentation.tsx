@@ -57,7 +57,7 @@ const slides = [
     id: 7,
     type: 'demo',
     title: 'Demo',
-    video: '/video/720p_belt.mp4'
+    video: '/video/shogunNotAudio.mp4'
   }
 ];
 
