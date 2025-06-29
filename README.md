@@ -213,10 +213,9 @@ This project integrates Chainlink in multiple ways to enable state changes on th
   - Automatic token conversion to USDC equivalent
 
 ### Chainlink Features Used
-1. **Chainlink Data Feeds**: Real-time price data for BTC/USD, ETH/USD, LINK/USD
-2. **Chainlink Functions**: Offchain computation for AI strategy optimization
-3. **Oracle Integration**: Multi-token vault with automatic price conversion
-4. **Data Validation**: Staleness protection and invalid data prevention
+1. **Chainlink Data Feeds**: Real-time price data for BTC/USD, ETH/USD, LINK/USD https://github.com/tomi204/AI-VAULTS/blob/main/contracts/MultiTokenVault.sol
+2. **Chainlink Functions**: Offchain computation for AI strategy optimization https://github.com/lausuarez02/shogun-ai-core/blob/main/deployment_functions/allocation_optimization.js
+3. **Oracle Integration**: Multi-token vault with automatic price conversion https://github.com/tomi204/AI-VAULTS/blob/main/ignition/modules/MultiTokenVaultSystem.ts
 
 All Chainlink integrations enable state changes on the blockchain through smart contract execution, making this project eligible for Chainlink hackathon prizes.
 
