@@ -97,8 +97,8 @@ Shōgun is currently live on Avalanche mainnet with active DeFi strategies autom
 * **Frontend (This Repo):** Web interface and user experience
 * **AI Strategy Manager:** [strategies-ai-avalanche](https://github.com/lausuarez02/strategies-ai-avalanche/)
 * **Agent Implementation:** [strategies-agent-avalanche](https://github.com/lausuarez02/strategies-agent-avalanche/)
-* **Smart Contracts AI:** [strategies-contracts-avalanche](https://github.com/lausuarez02/strategies-contracts-avalanche/)
-* **Smart Contracts Investing:** [contracts-avalanche](https://github.com/lausuarez02/strategies-contracts-avalanche/)
+* **Smart Contracts AI:** [strategies-contracts-avalanche](https://github.com/tomi204/AI-VAULTS)
+* **Smart Contracts Investing:** [contracts-avalanche](https://github.com/tomi204/AI-VAULTS)
 
 ## 🛠️ Tech Stack
 
