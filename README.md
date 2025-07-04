@@ -95,9 +95,7 @@ Shōgun is currently live on Avalanche mainnet with active DeFi strategies autom
 ### Repository Structure
 
 * **Frontend (This Repo):** Web interface and user experience
-* **AI Strategy Manager:** [strategies-ai-avalanche](https://github.com/lausuarez02/strategies-ai-avalanche/)
-* **Agent Implementation:** [strategies-agent-avalanche](https://github.com/lausuarez02/strategies-agent-avalanche/)
-* **Smart Contracts AI:** [strategies-contracts-avalanche](https://github.com/tomi204/AI-VAULTS)
+* **AI Strategy Manager:** [shogun-ai-core](https://github.com/lausuarez02/shogun-ai-core/)
 * **Smart Contracts Investing:** [contracts-avalanche](https://github.com/tomi204/AI-VAULTS)
 
 ## 🛠️ Tech Stack
@@ -113,7 +111,6 @@ Shōgun is currently live on Avalanche mainnet with active DeFi strategies autom
 - **Wagmi** - React Hooks for Ethereum
 
 ### Blockchain & Security
-- **Safe** (formerly Gnosis Safe) - Multi-signature wallet infrastructure
 - **Viem** - TypeScript Ethereum library
 - **Avalanche Mainnet** - Deployment chain
 - **USDC.e** - Stablecoin integration
@@ -123,13 +120,9 @@ Shōgun is currently live on Avalanche mainnet with active DeFi strategies autom
 ### AI/ML Components
 - **Custom AI Agent** (Shōgun Council) for:
   - Market analysis and yield optimization
-  - Protocol risk profiling with Allora Network
+  - Protocol risk profiling
   - Cross-chain strategy execution
   - Real-time portfolio rebalancing
-
-### Partner Integrations
-- **deBridge** - Cross-chain transaction execution
-- **Allora Network** - Decentralized intelligence for risk assessment
 
 ## 🎯 Key Features
 
@@ -140,7 +133,7 @@ Shōgun is currently live on Avalanche mainnet with active DeFi strategies autom
 
 ### AI-Driven Strategy Execution
 - **LLM-based planning**: Intelligent strategy generation using advanced language models
-- **Risk assessment**: Multi-layered risk scoring with Allora Network integration
+- **Risk assessment**: Multi-layered risk scoring
 - **Automated execution**: AI agents execute pre-approved strategies through secure interfaces
 - **Performance optimization**: Continuous monitoring and rebalancing for maximum yields
 
